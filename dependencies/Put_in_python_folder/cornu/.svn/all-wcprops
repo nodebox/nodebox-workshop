@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/824/libraries/cornu
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/824/libraries/cornu/__init__.py
+END
+cornu_example1.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/399/libraries/cornu/cornu_example1.py
+END
+cornu_example2.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/399/libraries/cornu/cornu_example2.py
+END

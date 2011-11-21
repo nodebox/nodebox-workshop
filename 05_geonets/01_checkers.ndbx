@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#486168ff"/>
+    <node name="eye" prototype="corevector.geonet" x="90" y="80">
+        <param name="eyes_width" type="float">
+            <value>15.0</value>
+        </param>
+        <node name="ellipse2" prototype="corevector.ellipse" x="170" y="200">
+            <param name="width">
+                <expression>parent.eyes_width*2</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#ffffffff</value>
+            </param>
+        </node>
+        <node name="ellipse3" prototype="corevector.ellipse" x="170" y="280">
+            <param name="width">
+                <expression>parent.eyes_width</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#040404ff</value>
+            </param>
+        </node>
+        <node name="ellipse1" prototype="corevector.ellipse" x="170" y="120">
+            <param name="width">
+                <expression>parent.eyes_width*4</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+        </node>
+        <node name="merge1" prototype="corevector.merge" rendered="true" x="320" y="120"/>
+        <conn input="merge1" output="ellipse1" port="shapes"/>
+        <conn input="merge1" output="ellipse2" port="shapes"/>
+        <conn input="merge1" output="ellipse3" port="shapes"/>
+    </node>
+    <node name="eye1" prototype="corevector.geonet" x="90" y="170">
+        <param name="eyes_width" type="float">
+            <value>10.0</value>
+        </param>
+        <node name="ellipse2" prototype="corevector.ellipse" x="170" y="200">
+            <param name="width">
+                <expression>parent.eyes_width*2</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+        </node>
+        <node name="ellipse3" prototype="corevector.ellipse" x="170" y="280">
+            <param name="width">
+                <expression>parent.eyes_width</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#ffffffff</value>
+            </param>
+        </node>
+        <node name="ellipse1" prototype="corevector.ellipse" x="170" y="120">
+            <param name="width">
+                <expression>parent.eyes_width*4</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#ffffffff</value>
+            </param>
+        </node>
+        <node name="merge1" prototype="corevector.merge" rendered="true" x="320" y="120"/>
+        <conn input="merge1" output="ellipse1" port="shapes"/>
+        <conn input="merge1" output="ellipse2" port="shapes"/>
+        <conn input="merge1" output="ellipse3" port="shapes"/>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="220" y="210">
+        <param name="rows">
+            <value>7</value>
+        </param>
+        <param name="columns">
+            <value>7</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" rendered="true" x="360" y="90">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>n=CNUM</value>
+        </param>
+    </node>
+    <node name="switch1" prototype="corevector.switch" x="220" y="80">
+        <param name="select">
+            <expression>stamp("n",0)</expression>
+        </param>
+    </node>
+    <conn input="switch1" output="eye" port="shapes"/>
+    <conn input="switch1" output="eye1" port="shapes"/>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="place1" output="switch1" port="shape"/>
+</ndbx>

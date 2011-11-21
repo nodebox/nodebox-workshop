@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#ffffffff"/>
+    <node name="line1" prototype="corevector.line" x="60" y="50">
+        <param name="angle">
+            <expression>stamp("num",0)/5.0</expression>
+        </param>
+        <param name="distance">
+            <value>20.0</value>
+        </param>
+        <param name="stroke">
+            <expression>color(.80, angle/500.0, 0.10, 1.00)</expression>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" rendered="true" x="360" y="60">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="scatter1" prototype="corevector.scatter" x="160" y="130">
+        <param name="amount">
+            <value>3000</value>
+        </param>
+        <param name="seed">
+            <value>9</value>
+        </param>
+    </node>
+    <node name="sort1" prototype="corevector.sort" x="250" y="130">
+        <param name="scope">
+            <value>pt_g</value>
+        </param>
+        <param name="order">
+            <value>proximity</value>
+        </param>
+        <param name="x">
+            <value>12.709885</value>
+        </param>
+        <param name="y">
+            <value>-58.16246</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="60" y="130">
+        <param name="text">
+            <value>IMPLANT</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>130.0</value>
+        </param>
+    </node>
+    <conn input="sort1" output="scatter1" port="shape"/>
+    <conn input="place1" output="sort1" port="template"/>
+    <conn input="scatter1" output="textpath1" port="shape"/>
+    <conn input="place1" output="line1" port="shape"/>
+</ndbx>

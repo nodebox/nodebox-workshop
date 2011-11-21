@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#cedcdeff"/>
+    <node name="align3" prototype="corevector.align" x="150" y="80">
+        <param name="halign">
+            <value>center</value>
+        </param>
+    </node>
+    <node name="copy2" prototype="corevector.copy" x="340" y="180">
+        <param name="copies">
+            <value>7</value>
+        </param>
+        <param name="r">
+            <expression>FRAME/2.0</expression>
+        </param>
+        <param name="sx">
+            <value>-12.0</value>
+        </param>
+        <param name="sy">
+            <value>-12.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="100" y="230">
+        <param name="width">
+            <value>400.0</value>
+        </param>
+        <param name="height">
+            <value>400.0</value>
+        </param>
+    </node>
+    <node name="eye" prototype="corevector.geonet" x="60" y="80">
+        <param name="eyes_width" type="float">
+            <value>31.0</value>
+        </param>
+        <param name="number" type="float">
+            <expression>stamp("n",0)</expression>
+        </param>
+        <node name="ellipse4" prototype="corevector.ellipse" x="170" y="410">
+            <param name="width">
+                <value>30.0</value>
+            </param>
+            <param name="height">
+                <value>30.0</value>
+            </param>
+            <param name="fill">
+                <value>#fc1d02ff</value>
+            </param>
+            <param name="strokeWidth">
+                <value>3.0</value>
+            </param>
+        </node>
+        <node name="ellipse5" prototype="corevector.ellipse" x="170" y="500">
+            <param name="width">
+                <value>20.0</value>
+            </param>
+            <param name="height">
+                <value>20.0</value>
+            </param>
+            <param name="fill">
+                <value>#029afcff</value>
+            </param>
+            <param name="strokeWidth">
+                <value>3.0</value>
+            </param>
+        </node>
+        <node name="transform1" prototype="corevector.transform" x="340" y="410">
+            <param name="r">
+                <expression>FRAME*parent.number</expression>
+            </param>
+        </node>
+        <node name="transform2" prototype="corevector.transform" x="340" y="500">
+            <param name="r">
+                <expression>-FRAME/2*parent.number</expression>
+            </param>
+        </node>
+        <node name="ellipse2" prototype="corevector.ellipse" x="170" y="200">
+            <param name="width">
+                <expression>parent.eyes_width*2</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#81cdcdff</value>
+            </param>
+            <param name="stroke">
+                <value>#ffffffff</value>
+            </param>
+            <param name="strokeWidth">
+                <value>1.0</value>
+            </param>
+        </node>
+        <node name="ellipse3" prototype="corevector.ellipse" x="170" y="280">
+            <param name="width">
+                <expression>parent.eyes_width</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#040404ff</value>
+            </param>
+            <param name="stroke">
+                <value>#ffffffff</value>
+            </param>
+            <param name="strokeWidth">
+                <value>1.0</value>
+            </param>
+        </node>
+        <node name="transform3" prototype="corevector.transform" x="490" y="160"/>
+        <node name="merge1" prototype="corevector.merge" rendered="true" x="320" y="120"/>
+        <node name="ellipse1" prototype="corevector.ellipse" x="170" y="120">
+            <param name="width">
+                <expression>parent.eyes_width*4</expression>
+            </param>
+            <param name="height">
+                <expression>width</expression>
+            </param>
+            <param name="fill">
+                <value>#160000e3</value>
+            </param>
+            <param name="stroke">
+                <value>#ffffffff</value>
+            </param>
+            <param name="strokeWidth">
+                <value>1.0</value>
+            </param>
+        </node>
+        <node name="align2" prototype="corevector.align" x="260" y="500">
+            <param name="x">
+                <value>-11.0</value>
+            </param>
+            <param name="y">
+                <value>-11.0</value>
+            </param>
+        </node>
+        <node name="align1" prototype="corevector.align" x="260" y="410">
+            <param name="x">
+                <value>-50.0</value>
+            </param>
+            <param name="y">
+                <value>-50.0</value>
+            </param>
+        </node>
+        <conn input="merge1" output="ellipse1" port="shapes"/>
+        <conn input="merge1" output="ellipse2" port="shapes"/>
+        <conn input="merge1" output="ellipse3" port="shapes"/>
+        <conn input="align1" output="ellipse4" port="shape"/>
+        <conn input="transform1" output="align1" port="shape"/>
+        <conn input="merge1" output="transform1" port="shapes"/>
+        <conn input="transform2" output="align2" port="shape"/>
+        <conn input="align2" output="ellipse5" port="shape"/>
+        <conn input="merge1" output="transform2" port="shapes"/>
+        <conn input="transform3" output="merge1" port="shape"/>
+    </node>
+    <node name="shapeonpath1" prototype="corevector.shapeonpath" x="220" y="180">
+        <param name="amount">
+            <value>13</value>
+        </param>
+        <param name="dist">
+            <value>38.520023</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>n=random(CNUM,2,10)</value>
+        </param>
+        <param name="keepGeometry">
+            <value>0</value>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" rendered="true" x="450" y="180">
+        <param name="r">
+            <expression>FRAME</expression>
+        </param>
+    </node>
+    <conn input="shapeonpath1" output="ellipse1" port="template"/>
+    <conn input="align3" output="eye" port="shape"/>
+    <conn input="copy2" output="shapeonpath1" port="shape"/>
+    <conn input="transform1" output="copy2" port="shape"/>
+    <conn input="shapeonpath1" output="align3" port="shape"/>
+</ndbx>

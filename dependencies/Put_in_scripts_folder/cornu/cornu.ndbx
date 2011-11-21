@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="cornu" prototype="corevector.filter" x="120" y="90">
+        <description>Generate a shape with the cornu library.</description>
+        <param name="_code">
+            <value type="python"><![CDATA[cornu = ximport("cornu")
+
+def alternate(i):
+    i = iter(i)
+    while True:
+        yield(i.next(), i.next())
+        
+def cook(self):
+    size(100, 100)
+    if self.shape is not None:
+        pts = ((pt.x/100, pt.y/100) for pt in self.shape.points)
+    else:
+        pts = alternate([float(num)/100 for num in self.points.split()])
+    p = cornu.path(pts, close=self.close, tweaks=self.tweaks)
+    p.fill = None
+    p.strokeColor = Color(0,0,0,1)
+    return p.asGeometry()
+]]></value>
+        </param>
+        <param name="_handle">
+            <value type="python"><![CDATA[from nodebox.handle import AbstractHandle
+
+def alternate(i):
+    i = iter(i)
+    while True:
+        yield(i.next(), i.next())
+
+def num_to_str(num):
+    if int(num) == num:
+        return str(int(num))
+    else:
+        return "%.2f" % num
+
+def points_to_str(points):
+    return " ".join(["%s %s" % (num_to_str(pt[0]), num_to_str(pt[1])) for pt in points])
+
+class CornuPointsHandle(AbstractHandle):
+    def __init__(self, node):
+        AbstractHandle.__init__(self, node)
+        self.inserts_new_point = False
+        self.removes_selected_point = False
+        self.dragging = False
+        self.dragging_index = None
+        self.px = None
+        self.py = None
+        self.update()
+
+    def _get_points(self):
+        pts = [float(num) for num in self.node.asString("points").split()]
+        return alternate(pts)
+    points = property(_get_points)
+
+    def draw(self, ctx):
+        if self.node.getPort("shape").value is not None: return
+        for pt in self.points:
+            self.drawDot(ctx, pt[0], pt[1])
+
+    def mousePressed(self, pt):
+        if self.node.getPort("shape").value is not None: return
+        x, y = pt.x, pt.y
+        if self.inserts_new_point:
+            points = list(self.points)
+            points.append((x, y))
+            self.node.silentSet("points", points_to_str(points))
+            self.dragging = True
+            self.dragging_index = len(points) - 1
+            self.px = x
+            self.py = y
+        else:
+            points = list(self.points)
+            for (i, p) in enumerate(points):
+                hitRect = self.createHitRectangle(p[0], p[1])
+                if hitRect.contains(pt):
+                    if self.removes_selected_point:
+                        del points[i]
+                        self.node.silentSet("points", points_to_str(points))
+                        break
+                    else:
+                        self.dragging = True
+                        self.dragging_index = i
+                        self.px = x
+                        self.py = y
+
+    def mouseDragged(self, pt):
+        if not self.dragging: return
+        points = list(self.points)
+        x, y = pt.x, pt.y
+        dx = x - self.px
+        dy = y - self.py
+        self.px = x
+        self.py = y
+        if not (dx == 0 and dy == 0):
+            point = points[self.dragging_index]
+            points[self.dragging_index] = (point[0] + dx, point[1] + dy)
+            self.node.silentSet("points", points_to_str(points))
+
+    def mouseReleased(self, pt):
+        self.dragging = False
+        self.dragging_index = None
+        self.px = None
+        self.py = None
+                
+    def keyPressed(self, keyCode, modifiers):
+        if self.node.getPort("shape").value is not None: return
+        if modifiers & AbstractHandle.SHIFT_DOWN:
+            self.inserts_new_point = True
+        elif modifiers & AbstractHandle.META_DOWN:
+            self.removes_selected_point = True
+
+    def keyReleased(self, keyCode, modifiers):
+        self.inserts_new_point = self.removes_selected_point = False
+
+def cook(self):
+    return CornuPointsHandle(self.node)]]></value>
+        </param>
+        <param name="_image">
+            <value>cornu.png</value>
+        </param>
+        <param enableExpression="!shape.connected" name="points" type="string">
+            <value>-100 -100 100 100</value>
+        </param>
+        <param name="close" type="int" widget="toggle">
+            <value>1</value>
+        </param>
+        <param name="tweaks" type="int">
+            <value>10</value>
+        </param>
+    </node>
+</ndbx>

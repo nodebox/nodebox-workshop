@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="550.0"/>
+    <var name="canvasHeight" value="689.0"/>
+    <node name="grid1" prototype="corevector.grid" x="50" y="130">
+        <param name="width">
+            <value>10.0</value>
+        </param>
+        <param name="height">
+            <value>15.0</value>
+        </param>
+        <param name="rows">
+            <value>4</value>
+        </param>
+        <param name="columns">
+            <value>3</value>
+        </param>
+    </node>
+    <node name="grid2" prototype="corevector.grid" x="290" y="130">
+        <param name="width">
+            <value>400.0</value>
+        </param>
+        <param name="height">
+            <value>600.0</value>
+        </param>
+        <param name="rows">
+            <value>18</value>
+        </param>
+        <param name="columns">
+            <value>11</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="140" y="50">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>myfill=int(random(CNUM+seed,0,2))</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <expression>stamp("myseed",1)</expression>
+        </param>
+    </node>
+    <node name="place2" prototype="corevector.place" rendered="true" x="380" y="50">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>myseed=CNUM*seed</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <value>100</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="50" y="50">
+        <param name="width">
+            <value>5.0</value>
+        </param>
+        <param name="height">
+            <value>5.0</value>
+        </param>
+        <param name="fill">
+            <expression>color(stamp("myfill",1), 1.00)</expression>
+        </param>
+    </node>
+    <node name="reflect1" prototype="corevector.reflect" x="220" y="50">
+        <param name="x">
+            <value>7.0</value>
+        </param>
+        <param name="angle">
+            <value>90.0</value>
+        </param>
+    </node>
+    <conn input="reflect1" output="place1" port="shape"/>
+    <conn input="place2" output="reflect1" port="shape"/>
+    <conn input="place2" output="grid2" port="template"/>
+    <conn input="place1" output="rect1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+</ndbx>

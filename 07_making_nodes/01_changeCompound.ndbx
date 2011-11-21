@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="compound1" prototype="corevector.compound" rendered="true" x="470" y="10">
+<param name="_code">
+<value type="python"><![CDATA[from nodebox.graphics import Path
+from nodebox.util.Geometry import distance
+
+
+def closest(self,x,y,control_points):
+   closest = 0
+   dist = None
+   for i in range(len(control_points)):
+   	p = control_points[i]
+   	d = distance(p.x,p.y,x,y)
+   	if d<dist or not dist:
+   		closest = i
+   		dist = d
+   return closest,dist
+
+def cook(self):
+     p = Path()
+     if self.shape is None: return None
+     if self.shapeB is None: return self.shape.clone()
+     pA = self.shape.points
+     pB = self.shapeB.points
+     p.strokeColor = self.stroke
+     p.strokeWidth = self.strokeWidth
+     for i,p1 in enumerate(pA):
+         c,d = closest(self,p1.x,p1.y,pB)
+         p2 = pB[c]    
+         p.line(p1.x,p1.y,p2.x,p2.y)
+     return p.asGeometry()]]></value>
+</param>
+<param name="function">
+<value>intersected</value>
+</param>
+<param name="invert_difference">
+<value>1</value>
+</param>
+<param name="fill">
+<value>#000000fd</value>
+</param>
+<param name="stroke">
+<value>#000000fb</value>
+</param>
+<param name="strokeWidth">
+<value>0.1</value>
+</param>
+</node>
+<node name="rect1" prototype="corevector.rect" x="10" y="90">
+<param name="_code">
+<value type="python"><![CDATA[from nodebox.graphics import Path
+
+def cook(self):
+    p = Path()
+    if self.rx == 0 and self.ry == 0:
+        p.ellipse(self.x, self.y, self.width, self.height)
+    else:
+        p.roundedRect(self.x, self.y, self.width, self.height, self.rx, self.ry)
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+</param>
+<param name="x">
+<value>3.0517578E-5</value>
+</param>
+<param name="y">
+<value>-42.045486</value>
+</param>
+<param name="width">
+<value>400.0</value>
+</param>
+<param name="height">
+<value>200.0</value>
+</param>
+</node>
+<node name="resample1" prototype="corevector.resample" x="100" y="10">
+<param name="method">
+<value>amount</value>
+</param>
+<param name="points">
+<value>300</value>
+</param>
+</node>
+<node name="resample2" prototype="corevector.resample" x="100" y="90">
+<param name="method">
+<value>amount</value>
+</param>
+<param name="points">
+<expression>resample1.points</expression>
+</param>
+<param name="perContour">
+<value>1</value>
+</param>
+</node>
+<node name="sort1" prototype="corevector.sort" x="190" y="10">
+<param name="scope">
+<value>pt_g</value>
+</param>
+<param name="order">
+<value>shift</value>
+</param>
+<param name="offset">
+<value>9</value>
+</param>
+</node>
+<node name="sort2" prototype="corevector.sort" x="190" y="90">
+<param name="scope">
+<value>pt_g</value>
+</param>
+<param name="order">
+<value>shift</value>
+</param>
+<param name="offset">
+<value>-104</value>
+</param>
+</node>
+<node name="textpath1" prototype="corevector.textpath" x="10" y="10">
+<param name="text">
+<value>LINES</value>
+</param>
+<param name="font">
+<value>Arial-Black</value>
+</param>
+<param name="size">
+<value>98.0</value>
+</param>
+<param name="x">
+<value>38.0</value>
+</param>
+<param name="y">
+<value>-1.0</value>
+</param>
+</node>
+<node name="textpath2" prototype="corevector.textpath" x="0" y="210">
+<param name="text">
+<value>LINES</value>
+</param>
+<param name="font">
+<value>Arial-Black</value>
+</param>
+<param name="size">
+<value>142.0</value>
+</param>
+<param name="x">
+<value>37.0</value>
+</param>
+<param name="y">
+<value>17.0</value>
+</param>
+</node>
+<conn input="compound1" output="sort1" port="shapeB"/>
+<conn input="compound1" output="sort2" port="shape"/>
+<conn input="resample1" output="textpath1" port="shape"/>
+<conn input="sort2" output="resample2" port="shape"/>
+<conn input="resample2" output="textpath2" port="shape"/>
+<conn input="sort1" output="resample1" port="shape"/>
+</ndbx>

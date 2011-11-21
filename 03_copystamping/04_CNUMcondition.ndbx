@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="grid1" prototype="corevector.grid" x="190" y="120">
+<param name="width">
+<value>400.0</value>
+</param>
+<param name="height">
+<value>400.0</value>
+</param>
+<param name="rows">
+<value>20</value>
+</param>
+<param name="columns">
+<value>20</value>
+</param>
+</node>
+<node name="place1" prototype="corevector.place" rendered="true" x="330" y="30">
+<param name="stamp">
+<value>1</value>
+</param>
+<param name="expr">
+<value>c=CNUM</value>
+</param>
+</node>
+<node name="rect1" prototype="corevector.rect" x="190" y="30">
+<param name="width">
+<value>18.0</value>
+</param>
+<param name="height">
+<value>18.0</value>
+</param>
+<param name="fill">
+<expression>if (int(stamp("c", 20)) %2==0) { color(1,stamp("c", 20)/400,0) } else { color(0,0,0) }</expression>
+</param>
+</node>
+<conn input="place1" output="grid1" port="template"/>
+<conn input="place1" output="rect1" port="shape"/>
+</ndbx>

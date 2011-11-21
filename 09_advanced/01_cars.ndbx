@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="1440.0"/>
+    <var name="canvasHeight" value="900.0"/>
+    <node name="align1" prototype="corevector.align" x="50" y="-100">
+        <param name="halign">
+            <value>center</value>
+        </param>
+    </node>
+    <node name="color1" prototype="corevector.color" x="320" y="90">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path
+
+def cook(self):
+    
+    if self.shape is None: return None
+    new_shape = self.shape.clone()
+    for path in new_shape.paths:
+        path.fillColor = self.fill
+        if self.strokeWidth > 0:
+            path.strokeColor = self.stroke
+            path.strokeWidth = self.strokeWidth
+        else:
+            path.strokeColor = None
+    return new_shape]]></value>
+        </param>
+        <param name="fill">
+            <expression>hsb(random(stamp("raam",0)*400,0,1),.9,.5)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>1.5</value>
+        </param>
+    </node>
+    <node name="compound1" prototype="corevector.compound" x="320" y="-90">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+    </node>
+    <node name="compound2" prototype="corevector.compound" x="140" y="280">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+    </node>
+    <node name="copy1" prototype="corevector.copy" x="170" y="180">
+        <param name="copies">
+            <value>2</value>
+        </param>
+        <param name="tx">
+            <value>150.0</value>
+        </param>
+    </node>
+    <node name="copy2" prototype="corevector.copy" x="210" y="-100">
+        <param name="copies">
+            <value>3</value>
+        </param>
+        <param name="tx">
+            <value>50.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>groot=CNUM+stamp("raam",0)</value>
+        </param>
+    </node>
+    <node name="copy4" prototype="corevector.copy" x="470" y="340">
+        <param name="copies">
+            <value>16</value>
+        </param>
+        <param name="ty">
+            <value>68.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="20" y="260">
+        <param name="x">
+            <value>-75.0</value>
+        </param>
+        <param name="y">
+            <value>60.0</value>
+        </param>
+        <param name="width">
+            <value>70.0</value>
+        </param>
+        <param name="height">
+            <value>70.0</value>
+        </param>
+    </node>
+    <node name="fit1" prototype="corevector.fit" x="340" y="170">
+        <param name="x">
+            <value>22.417969</value>
+        </param>
+        <param name="width">
+            <value>55.0</value>
+        </param>
+        <param name="height">
+            <value>100.0</value>
+        </param>
+    </node>
+    <node name="line1" prototype="corevector.line" x="370" y="340">
+        <param name="x">
+            <value>-774.0</value>
+        </param>
+        <param name="y">
+            <value>-462.0</value>
+        </param>
+        <param name="distance">
+            <expression>WIDTH</expression>
+        </param>
+        <param name="points">
+            <value>52</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="230" y="80"/>
+    <node name="noise1" prototype="noise.noise" x="570" y="320">
+        <param name="_code">
+            <value type="python"><![CDATA[import noise
+from random import seed
+
+def cook(self):
+    noise.seed(self.seed)
+    if self.shape is None: return None
+    
+    new_shape = self.shape.clone()
+    new_shape.fill = None
+    w = new_shape.bounds.width
+    h = new_shape.bounds.height
+    for point in new_shape.points:
+        d = noise.generate(point.x-self.x,point.y-self.y,width = w,height=h, scale=self.scale/100.0)*self.multiply
+        point.x+=d
+        point.y+=d
+    return new_shape]]></value>
+        </param>
+        <param name="scale">
+            <value>17.0</value>
+        </param>
+        <param name="multiply">
+            <value>86.0</value>
+        </param>
+    </node>
+    <node name="one_car" prototype="corevector.align" rendered="true" x="440" y="170"/>
+    <node name="polygon1" prototype="corevector.polygon" x="70" y="350">
+        <param name="x">
+            <value>-75.0</value>
+        </param>
+        <param name="y">
+            <value>60.0</value>
+        </param>
+        <param name="radius">
+            <value>25.0</value>
+        </param>
+        <param name="sides">
+            <expression>random(stamp("raam",0),3,9)</expression>
+        </param>
+        <param name="fill">
+            <value>#f3f3f3ff</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="-200" y="20">
+        <param name="width">
+            <value>292.0</value>
+        </param>
+        <param name="height">
+            <value>110.0</value>
+        </param>
+    </node>
+    <node name="rect2" prototype="corevector.rect" x="210" y="-10">
+        <param name="y">
+            <value>-65.0</value>
+        </param>
+        <param name="width">
+            <value>150.0</value>
+        </param>
+    </node>
+    <node name="rect3" prototype="corevector.rect" x="-30" y="-100">
+        <param name="y">
+            <value>-65.0</value>
+        </param>
+        <param name="width">
+            <value>70.0</value>
+        </param>
+        <param name="height">
+            <value>50.0</value>
+        </param>
+    </node>
+    <node name="shapeonpath1" prototype="corevector.shapeonpath" x="710" y="240">
+        <param name="amount">
+            <value>261</value>
+        </param>
+        <param name="dist">
+            <value>1.7</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>raam=CNUM</value>
+        </param>
+    </node>
+    <node name="switch1" prototype="corevector.switch" x="80" y="40">
+        <param name="select">
+            <expression>int(random(stamp("raam",0)*30,0,4))</expression>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="130" y="-100">
+        <param name="tx">
+            <value>-48.0</value>
+        </param>
+        <param name="ty">
+            <value>-49.0</value>
+        </param>
+        <param name="sx">
+            <expression>random(stamp("groot",0)*3000,20,90)</expression>
+        </param>
+    </node>
+    <node name="wiggle1" prototype="corevector.wiggle" x="-80" y="-10">
+        <param name="seed">
+            <expression>stamp("raam",0)</expression>
+        </param>
+    </node>
+    <conn input="merge1" output="copy1" port="shapes"/>
+    <conn input="merge1" output="compound1" port="shapes"/>
+    <conn input="copy2" output="transform1" port="shape"/>
+    <conn input="align1" output="rect3" port="shape"/>
+    <conn input="transform1" output="align1" port="shape"/>
+    <conn input="compound1" output="copy2" port="shape"/>
+    <conn input="compound1" output="rect2" port="shapeB"/>
+    <conn input="color1" output="merge1" port="shape"/>
+    <conn input="fit1" output="color1" port="shape"/>
+    <conn input="compound2" output="ellipse1" port="shape"/>
+    <conn input="compound2" output="polygon1" port="shapeB"/>
+    <conn input="copy1" output="compound2" port="shape"/>
+    <conn input="switch1" output="rect1" port="shapes"/>
+    <conn input="merge1" output="wiggle1" port="shapes"/>
+    <conn input="one_car" output="fit1" port="shape"/>
+    <conn input="shapeonpath1" output="one_car" port="shape"/>
+    <conn input="wiggle1" output="rect1" port="shape"/>
+    <conn input="copy4" output="line1" port="shape"/>
+    <conn input="noise1" output="copy4" port="shape"/>
+    <conn input="shapeonpath1" output="noise1" port="template"/>
+</ndbx>

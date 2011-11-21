@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#a2c6c6ff"/>
+    <var name="canvasWidth" value="1909.0"/>
+    <var name="canvasHeight" value="1244.0"/>
+    <node name="align1" prototype="corevector.align" x="500" y="90"/>
+    <node name="compound1" prototype="corevector.compound" x="440" y="460">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+    </node>
+    <node name="compound2" prototype="corevector.compound" x="440" y="250">
+        <param name="function">
+            <value>intersected</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <value>#fbfbfbff</value>
+        </param>
+    </node>
+    <node name="connect1" prototype="corevector.connect" x="380" y="90">
+        <param name="fill">
+            <value>#00000003</value>
+        </param>
+    </node>
+    <node name="copy1" prototype="corevector.copy" x="880" y="340">
+        <param name="copies">
+            <value>15</value>
+        </param>
+        <param name="r">
+            <value>24.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="50" y="360">
+        <param name="width">
+            <value>50.0</value>
+        </param>
+        <param name="height">
+            <value>50.0</value>
+        </param>
+        <param name="fill">
+            <expression>hsb(stamp("size",10)/20, 0.80, 0.80, 1.00)</expression>
+        </param>
+    </node>
+    <node name="ellipse2" prototype="corevector.ellipse" x="170" y="250">
+        <param name="width">
+            <expression>ellipse1.width/3</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+    </node>
+    <node name="fit1" prototype="corevector.fit" x="630" y="410">
+        <param name="width">
+            <expression>stamp("size",10)*1.5</expression>
+        </param>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="990" y="460">
+        <param name="width">
+            <value>685.0</value>
+        </param>
+        <param name="height">
+            <value>230.0</value>
+        </param>
+        <param name="rows">
+            <value>2</value>
+        </param>
+        <param name="columns">
+            <value>4</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="550" y="360"/>
+    <node name="merge2" prototype="corevector.merge" x="790" y="340"/>
+    <node name="place1" prototype="corevector.place" rendered="true" x="1160" y="360">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>n=CNUM*100</value>
+        </param>
+    </node>
+    <node name="place2" prototype="corevector.place" x="310" y="320">
+        <param name="expr">
+            <value>=</value>
+        </param>
+    </node>
+    <node name="place3" prototype="corevector.place" x="690" y="260">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>size=random(CNUM,4,12)</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="60" y="90"/>
+    <node name="resample1" prototype="corevector.resample" x="160" y="450">
+        <param name="_code">
+            <value type="python"><![CDATA[
+def cook(self):
+    # Check if a shape is connected.
+    if self.shape is None: return None
+    if self.method == 'length':
+        return self.shape.resampleByLength(self.length)
+    else:
+        return self.shape.resampleByAmount(self.points, self.perContour)]]></value>
+        </param>
+        <param name="method">
+            <value>amount</value>
+        </param>
+        <param name="length">
+            <value>10.563751</value>
+        </param>
+        <param name="points">
+            <expression>stamp("size",10)</expression>
+        </param>
+    </node>
+    <node name="scatter1" prototype="corevector.scatter" x="170" y="90">
+        <param name="amount">
+            <value>10</value>
+        </param>
+        <param name="seed">
+            <expression>stamp("n",0)</expression>
+        </param>
+    </node>
+    <node name="sort1" prototype="corevector.sort" x="270" y="90">
+        <param name="scope">
+            <value>pt_g</value>
+        </param>
+        <param name="order">
+            <value>angle</value>
+        </param>
+    </node>
+    <conn input="merge2" output="align1" port="shapes"/>
+    <conn input="merge2" output="place3" port="shapes"/>
+    <conn input="merge1" output="ellipse1" port="shapes"/>
+    <conn input="merge1" output="compound2" port="shapes"/>
+    <conn input="merge1" output="compound1" port="shapes"/>
+    <conn input="scatter1" output="rect1" port="shape"/>
+    <conn input="sort1" output="scatter1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="connect1" output="sort1" port="shape"/>
+    <conn input="align1" output="connect1" port="shape"/>
+    <conn input="resample1" output="ellipse1" port="shape"/>
+    <conn input="place2" output="ellipse2" port="shape"/>
+    <conn input="place2" output="resample1" port="template"/>
+    <conn input="compound2" output="ellipse1" port="shape"/>
+    <conn input="compound1" output="ellipse1" port="shape"/>
+    <conn input="compound2" output="place2" port="shapeB"/>
+    <conn input="compound1" output="place2" port="shapeB"/>
+    <conn input="place3" output="align1" port="template"/>
+    <conn input="fit1" output="merge1" port="shape"/>
+    <conn input="place3" output="fit1" port="shape"/>
+    <conn input="place1" output="copy1" port="shape"/>
+    <conn input="copy1" output="merge2" port="shape"/>
+</ndbx>

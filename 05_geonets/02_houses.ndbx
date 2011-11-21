@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="align1" prototype="corevector.align" x="130" y="30">
+        <param name="halign">
+            <value>center</value>
+        </param>
+    </node>
+    <node name="freehand1" prototype="corevector.freehand" x="130" y="110">
+        <param name="path">
+            <value>M -484.929382324 -18.6560974121 -471.611419678 -18.6560974121 -440.536193848 -23.095413208 -396.143005371 -31.9740447998 -296.258361816 -34.1937103271 -251.86517334 -31.9740447998 -185.275405884 -7.55780029297 -156.419845581 5.76016235352 -116.465988159 21.2977752686 -98.7087097168 23.5174255371 -65.4138183594 25.7370910645 -32.118927002 25.7370910645 5.61526489258 19.0781097412 52.2280883789 10.1994781494 109.939239502 -3.11848449707 260.876037598 -27.5347290039 387.396606445 -49.7313232422 425.13079834 -56.3902893066 451.766723633 -58.609954834 471.743652344 -63.0492706299 482.841918945 -63.0492706299 487.28125 -65.2689361572 </value>
+        </param>
+    </node>
+    <node name="geonet1" prototype="corevector.geonet" x="40" y="30">
+        <param name="size" type="float">
+            <expression>stamp("size",10)*12</expression>
+        </param>
+        <node name="rect1" prototype="corevector.rect" x="60" y="-70"/>
+        <node name="rect2" prototype="corevector.rect" x="150" y="120">
+            <param name="x">
+                <value>15.0</value>
+            </param>
+            <param name="y">
+                <value>30.0</value>
+            </param>
+            <param name="width">
+                <value>30.0</value>
+            </param>
+            <param name="height">
+                <value>65.0</value>
+            </param>
+        </node>
+        <node name="polygon1" prototype="corevector.polygon" x="70" y="20">
+            <param name="y">
+                <value>-60.0</value>
+            </param>
+            <param name="radius">
+                <value>80.0</value>
+            </param>
+            <param name="align">
+                <value>1</value>
+            </param>
+        </node>
+        <node name="compound2" prototype="corevector.compound" x="310" y="90">
+            <param name="function">
+                <value>subtracted</value>
+            </param>
+            <param name="fill">
+                <value>#8416093a</value>
+            </param>
+            <param name="strokeWidth">
+                <value>1.0</value>
+            </param>
+        </node>
+        <node name="compound1" prototype="corevector.compound" x="230" y="-10"/>
+        <node name="fit1" prototype="corevector.fit" rendered="true" x="490" y="40">
+            <param name="width">
+                <expression>parent.size</expression>
+            </param>
+        </node>
+        <conn input="compound1" output="rect1" port="shape"/>
+        <conn input="compound1" output="polygon1" port="shapeB"/>
+        <conn input="compound2" output="compound1" port="shape"/>
+        <conn input="compound2" output="rect2" port="shapeB"/>
+        <conn input="fit1" output="compound2" port="shape"/>
+    </node>
+    <node name="shapeonpath1" prototype="corevector.shapeonpath" rendered="true" x="240" y="60">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Geometry, Path, Color, Transform
+from nodebox.util.Geometry import angle
+from nodebox.node import StampExpression
+
+def cook(self):
+    if self.shape is None: return None
+    if self.template is None: return None
+    
+    if self.stamp:
+        stamp = StampExpression(self.node, "expr")
+    
+    g = Geometry()
+
+    if self.keepGeometry:
+        g.extend(self.template.clone())
+           
+    first = True  
+    for i in range(self.amount):
+        if self.stamp:
+            context.put('CNUM', i)
+            stamp.evaluate(context)
+            self.node.stampExpressions(context)
+        if first:
+            t = .1 / 100
+            first = False
+        else:
+            t += self.dist / 500.0
+        pt1 = self.template.pointAt(t)
+        pt2 = self.template.pointAt(t + 0.00001)
+        a = angle(pt2.x, pt2.y, pt1.x, pt1.y)
+        tp = Transform()
+        tp.translate(pt1.x, pt1.y)
+        tp.rotate(a - 180)
+        newShape = tp.map(self.shape)
+        g.extend(newShape)
+        
+    return g]]></value>
+        </param>
+        <param name="amount">
+            <value>17</value>
+        </param>
+        <param name="dist">
+            <value>30.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>size=random(CNUM,3,6)</value>
+        </param>
+    </node>
+    <conn input="align1" output="geonet1" port="shape"/>
+    <conn input="shapeonpath1" output="align1" port="shape"/>
+    <conn input="shapeonpath1" output="freehand1" port="template"/>
+</ndbx>

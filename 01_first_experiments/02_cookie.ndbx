@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="compound1" prototype="corevector.compound" rendered="true" x="370" y="130">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="fill">
+            <value>#00000004</value>
+        </param>
+        <param name="strokeWidth">
+            <value>2.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="140" y="0"/>
+    <node name="place1" prototype="corevector.place" x="240" y="30"/>
+    <node name="scatter1" prototype="corevector.scatter" x="140" y="80"/>
+    <node name="star1" prototype="corevector.star" x="40" y="140">
+        <param name="points">
+            <value>5</value>
+        </param>
+    </node>
+    <conn input="compound1" output="place1" port="shape"/>
+    <conn input="compound1" output="star1" port="shapeB"/>
+    <conn input="scatter1" output="star1" port="shape"/>
+    <conn input="place1" output="scatter1" port="template"/>
+    <conn input="place1" output="ellipse1" port="shape"/>
+</ndbx>

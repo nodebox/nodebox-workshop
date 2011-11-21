@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="joy_division" prototype="corevector.generator" rendered="true" x="30" y="30">
+        <param name="_code">
+            <value type="python"><![CDATA[import os
+from os.path import abspath
+
+from javax.imageio import ImageIO
+from java.io import File
+from nodebox.graphics import Path, Geometry, Color
+
+def cook(self):
+    # Read in the file
+    img = ImageIO.read(File(abspath(self.image)))
+    raster = img.raster
+    w = raster.width
+    h = raster.height
+
+    detail = self.detail
+    dummy_array = [0.0, 0.0, 0.0, 0.0]
+    geo = Geometry()
+    for y in xrange(0, h, detail):
+        p = Path()
+        p.fill = None
+        p.stroke = self.stroke
+        p.strokeWidth = self.stroke_width
+        p.moveto(0, h)
+        for x in xrange(0, w, detail):
+            r, g, b, a = raster.getPixel(x, y, dummy_array)
+            brightness = max(r, g, b)
+            p.lineto(x, y + brightness * self.line_height / 100)
+        geo.add(p)
+
+    return geo
+    ]]></value>
+        </param>
+        <param name="image" type="string" widget="image">
+            <value>Kim-Jong-il.jpg</value>
+        </param>
+        <param name="detail" type="int">
+            <value>3</value>
+        </param>
+        <param name="line_height" type="float">
+            <value>5.0</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param name="stroke_width" type="float">
+            <value>1.0</value>
+        </param>
+    </node>
+</ndbx>

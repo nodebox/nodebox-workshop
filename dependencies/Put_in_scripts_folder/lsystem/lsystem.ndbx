@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="lsystem" prototype="corevector.generator" x="250" y="140">
+        <port name="segment"/>
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Geometry, Path, Transform
+from nodebox.node import StampExpression
+
+def cook(self):
+    segment = self.segment
+    
+    if self.stamp:
+        stamp = StampExpression(self.node, "expr")
+        
+    if segment is None:
+        p = Path()
+        p.rect(0, -self.length / 2, 2, self.length)
+        segment = p.asGeometry()
+    # Parse all rules
+    rules = {}
+    rulenum = 1
+    while hasattr(self, "rule%i" % rulenum):
+        full_rule = getattr(self, "rule%i" % rulenum)
+        if len(full_rule) > 0:
+            if len(full_rule) < 3 or full_rule[1] != '=':
+                raise ValueError("Rule %s should be in the format A=FFF" % rulenum)
+            rule_key = full_rule[0]
+            rule_value = full_rule[2:]
+            rules[rule_key] = rule_value
+        rulenum += 1
+    # Expand the rules up to the number of generations
+    full_rule = self.premise
+    for gen in xrange(int(round(self.generations))):
+        tmp_rule = ""
+        for letter in full_rule:
+            if letter in rules:
+                tmp_rule += rules[letter]
+            else:
+                tmp_rule += letter
+        full_rule = tmp_rule
+    # Now run the simulation
+    g = Geometry()
+    stack = []
+    t = Transform()
+    t.translate(self.x, self.y)
+    for i,letter in enumerate(full_rule):
+        if letter == 'F':
+            shapetopack = self.segment.clone()
+            newShape = t.map(shapetopack)
+            g.extend(newShape)
+            t.translate(0, -self.length)
+        elif letter == '+':
+            t.rotate(self.angle)
+        elif letter == '-':
+            t.rotate(-self.angle)
+        elif letter == '[':
+            stack.append(Transform(t))
+        elif letter == ']':
+            t = stack.pop()
+        if self.stamp:
+            context.put('CNUM', i)
+            stamp.evaluate(context)
+            self.node.stampExpressions(context)
+
+    return g]]></value>
+        </param>
+        <param name="_image">
+            <value>lsystem.png</value>
+        </param>
+        <param bounding="hard" max="5.0" min="0.0" name="generations" type="float">
+            <value>4.0</value>
+        </param>
+        <param name="x" type="float">
+            <value>0.0</value>
+        </param>
+        <param name="y" type="float">
+            <value>0.0</value>
+        </param>
+        <param name="angle" type="float">
+            <value>21.0</value>
+        </param>
+        <param name="length" type="float">
+            <value>15.0</value>
+        </param>
+        <param name="premise" type="string">
+            <value>X</value>
+        </param>
+        <param label="Rule 1" name="rule1" type="string">
+            <value>X=F-[[-X]++X]+FF[+FX]-X</value>
+        </param>
+        <param label="Rule 2" name="rule2" type="string">
+            <value>F=FF</value>
+        </param>
+        <param label="Rule 3" name="rule3" type="string">
+            <value/>
+        </param>
+        <param label="Rule 4" name="rule4" type="string">
+            <value/>
+        </param>
+        <param label="Rule 5" name="rule5" type="string">
+            <value/>
+        </param>
+        <param label="Copy Stamping" name="stamp" type="int" widget="toggle">
+            <value>1</value>
+        </param>
+        <param label="Expression" name="expr" type="string" widget="stamp_expression">
+            <value>letter=int(random(CNUM,0,26))</value>
+        </param>
+    </node>
+</ndbx>

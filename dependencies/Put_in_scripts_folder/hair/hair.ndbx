@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="hair" prototype="corevector.filter" rendered="true" x="210" y="120">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path,Geometry
+from nodebox.util.Geometry import coordinates
+from random import uniform
+
+def cook(self):
+    if self.shape is None: return None
+    p1c = self.shape.clone()
+    g = Geometry()
+    for i, point in enumerate(p1c.points):
+        p1 = Path()
+        x = point.x
+        y = point.y
+        xx = (x-self.midx)/2
+        yy = (y-self.midy)/2
+        p1.strokeColor = self.stroke
+        p1.strokeWidth = self.strokewidth
+        p1.line(x,y,x+uniform(0,xx),y+uniform(0,yy))
+        g.add(p1)
+    return g]]></value>
+        </param>
+        <param name="_image">
+            <value>hair.png</value>
+        </param>
+        <param name="midx" type="float">
+            <value>0.0</value>
+        </param>
+        <param name="midy" type="float">
+            <value>0.0</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param name="strokewidth" type="float">
+            <value>1.0</value>
+        </param>
+    </node>
+</ndbx>

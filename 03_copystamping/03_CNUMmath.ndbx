@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="ellipse1" prototype="corevector.ellipse" x="40" y="30">
+<param name="_code">
+<value type="python"><![CDATA[from nodebox.graphics import Path
+
+def cook(self):
+    p = Path()
+    p.ellipse(self.x, self.y, self.width, self.height)
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+</param>
+<param name="width">
+<expression>10+Math.sin(stamp("size",20)*2.5)*10</expression>
+</param>
+<param name="height">
+<expression>10+Math.cos(stamp("size",20)/2.5)/10</expression>
+</param>
+<param name="fill">
+<expression>color(width/40,height/20, 0.0)</expression>
+</param>
+<param name="strokeWidth">
+<value>1.0</value>
+</param>
+</node>
+<node name="grid1" prototype="corevector.grid" x="40" y="110">
+<param name="width">
+<value>400.0</value>
+</param>
+<param name="height">
+<value>400.0</value>
+</param>
+<param name="rows">
+<value>40</value>
+</param>
+<param name="columns">
+<value>25</value>
+</param>
+</node>
+<node name="place1" prototype="corevector.place" rendered="true" x="180" y="40">
+<param name="stamp">
+<value>1</value>
+</param>
+<param name="expr">
+<value>size=CNUM</value>
+</param>
+</node>
+<conn input="place1" output="grid1" port="template"/>
+<conn input="place1" output="ellipse1" port="shape"/>
+</ndbx>

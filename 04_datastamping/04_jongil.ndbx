@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="align1" prototype="corevector.align" x="330" y="50"/>
+    <node name="align2" prototype="corevector.align" x="160" y="50">
+        <param name="x">
+            <value>10.0</value>
+        </param>
+    </node>
+    <node name="datastamp1" prototype="corevector.datastamp" x="510" y="50">
+        <param name="file">
+            <value>csv/kimjongil.csv</value>
+        </param>
+    </node>
+    <node name="delete1" prototype="corevector.delete" x="600" y="280">
+        <param name="operation">
+            <value>0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="260" y="290">
+        <param name="width">
+            <value>300.0</value>
+        </param>
+        <param name="height">
+            <value>300.0</value>
+        </param>
+    </node>
+    <node name="ellipse3" prototype="corevector.ellipse" x="160" y="140">
+        <param name="y">
+            <value>-13.0</value>
+        </param>
+        <param name="width">
+            <value>6.0</value>
+        </param>
+        <param name="height">
+            <value>10.0</value>
+        </param>
+    </node>
+    <node name="fit1" prototype="corevector.fit" x="490" y="370">
+        <param name="width">
+            <value>360.0</value>
+        </param>
+    </node>
+    <node name="joy_division" prototype="corevector.generator" x="390" y="370">
+        <param name="_code">
+            <value type="python"><![CDATA[import os
+from os.path import abspath
+
+from javax.imageio import ImageIO
+from java.io import File
+from nodebox.graphics import Path, Geometry, Color
+
+def cook(self):
+    # Read in the file
+    img = ImageIO.read(File(abspath(self.image)))
+    raster = img.raster
+    w = raster.width
+    h = raster.height
+
+    detail = self.detail
+    geo = Geometry()
+    for y in xrange(0, h, detail):
+        p = Path()
+        p.fill = None
+        p.stroke = self.stroke
+        p.strokeWidth = self.stroke_width
+        p.moveto(0, h)
+        for x in xrange(0, w, detail):
+            r, g, b, a = raster.getPixel(x, y, [0.0,0.0,0.0,0.0])
+            brightness = max(r, g, b)
+            p.lineto(x, y + brightness * self.line_height / 100)
+        geo.add(p)
+
+    return geo
+    ]]></value>
+        </param>
+        <param name="image" type="string" widget="image">
+            <value>Kim-Jong-il.jpg</value>
+        </param>
+        <param name="detail" type="int">
+            <value>3</value>
+        </param>
+        <param name="line_height" type="float">
+            <value>5.0</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param name="stroke_width" type="float">
+            <value>0.2</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="70" y="50"/>
+    <node name="merge2" prototype="corevector.merge" rendered="true" x="670" y="150"/>
+    <node name="merge3" prototype="corevector.merge" x="250" y="50"/>
+    <node name="resample1" prototype="corevector.resample" x="360" y="180">
+        <param name="length">
+            <value>18.0</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="-60" y="50">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Text
+
+def cook(self):
+    t = Text(self.text, self.x, self.y, self.width, self.height)
+    t.fontName = self.font
+    t.fontSize = self.size
+    # valueOf requires a correct value: LEFT, CENTER, RIGHT or JUSTIFY. Anything else will
+    # make it crash. If users start doing crazy things and change the alignment, at least
+    # make sure you catch the error.
+    try:
+        t.align = Text.Align.valueOf(self.align)
+    except:
+        pass
+    p = t.path
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="text">
+            <expression>stamp("data_value_0","none")</expression>
+        </param>
+        <param name="size">
+            <value>20.0</value>
+        </param>
+        <param name="align">
+            <value>RIGHT</value>
+        </param>
+        <param name="fill">
+            <value>#005500ff</value>
+        </param>
+    </node>
+    <node name="textpath2" prototype="corevector.textpath" x="-60" y="140">
+        <param name="text">
+            <expression>stamp("data_value_1","none")</expression>
+        </param>
+        <param name="size">
+            <value>20.0</value>
+        </param>
+        <param name="align">
+            <value>LEFT</value>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="420" y="50">
+        <param name="r">
+            <expression>stamp("data_row_index",1)*add</expression>
+        </param>
+        <param name="add" type="float">
+            <value>6.8299985</value>
+        </param>
+    </node>
+    <conn input="resample1" output="ellipse1" port="shape"/>
+    <conn input="delete1" output="fit1" port="shape"/>
+    <conn input="delete1" output="ellipse1" port="bounding"/>
+    <conn input="merge3" output="align2" port="shapes"/>
+    <conn input="merge3" output="ellipse3" port="shapes"/>
+    <conn input="align1" output="merge3" port="shape"/>
+    <conn input="align2" output="merge1" port="shape"/>
+    <conn input="merge1" output="textpath1" port="shapes"/>
+    <conn input="merge1" output="textpath2" port="shapes"/>
+    <conn input="merge2" output="delete1" port="shapes"/>
+    <conn input="transform1" output="align1" port="shape"/>
+    <conn input="datastamp1" output="transform1" port="shape"/>
+    <conn input="datastamp1" output="resample1" port="template"/>
+    <conn input="merge2" output="datastamp1" port="shapes"/>
+    <conn input="fit1" output="joy_division" port="shape"/>
+</ndbx>

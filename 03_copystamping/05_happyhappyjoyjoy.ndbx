@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="grid1" prototype="corevector.grid" x="50" y="150">
+        <param name="width">
+            <value>302.0</value>
+        </param>
+        <param name="height">
+            <value>164.0</value>
+        </param>
+        <param name="rows">
+            <value>11</value>
+        </param>
+        <param name="columns">
+            <value>4</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" rendered="true" x="150" y="90">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.node import StampExpression
+from nodebox.graphics import Path, Geometry, Transform
+
+def cook(self):
+    if self.shape is None: return None
+    if self.template is None: return self.shape.clone()
+
+    if self.stamp:
+        stamp = StampExpression(self.node, "expr")
+        
+    g = Geometry()
+    for i, point in enumerate(self.template.points):
+        if self.stamp:
+            context.put('CNUM', i)
+            stamp.evaluate(context)
+            self.node.stampExpressions(context)
+            
+        t = Transform()
+        t.translate(point.x, point.y)
+        newShape = t.map(self.shape)
+        g.extend(newShape)
+    return g]]></value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>v=randint(CNUM,0,1)</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="50" y="50">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Text
+
+def cook(self):
+    t = Text(self.text, self.x, self.y, self.width, self.height)
+    t.fontName = self.font
+    t.fontSize = self.size
+    # valueOf requires a correct value: LEFT, CENTER, RIGHT or JUSTIFY. Anything else will
+    # make it crash. If users start doing crazy things and change the alignment, at least
+    # make sure you catch the error.
+    try:
+        t.align = Text.Align.valueOf(self.align)
+    except:
+        pass
+    p = t.path
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="text">
+            <expression>["happy","joy"][stamp("v",0)]</expression>
+        </param>
+    </node>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="place1" output="textpath1" port="shape"/>
+</ndbx>

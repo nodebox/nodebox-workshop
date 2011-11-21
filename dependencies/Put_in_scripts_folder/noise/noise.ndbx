@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="noise" prototype="corevector.filter" x="30" y="30">
+        <param name="_code">
+            <value type="python"><![CDATA[import noise
+from random import seed
+
+def cook(self):
+    noise.seed(self.seed)
+    if self.shape is None: return None
+    new_shape = self.shape.clone()
+    w = new_shape.bounds.width
+    h = new_shape.bounds.height
+    for point in new_shape.points:
+        d = noise.generate(point.x-self.x,point.y-self.y,width = w,height=h, scale=self.scale/100.0)*self.multiply
+        point.x+=d
+        point.y+=d
+    return new_shape]]></value>
+        </param>
+        <param name="_handle">
+            <value type="python"><![CDATA[from nodebox.handle import PointHandle#,FourPointHandle
+
+def cook(self):
+    #return FourPointHandle(self.node,"x","y","scale","scale")
+    return PointHandle(self.node)]]></value>
+        </param>
+        <param name="_image">
+            <value>noise.png</value>
+        </param>
+        <param name="scale" type="float">
+            <value>49.0</value>
+        </param>
+        <param name="multiply" type="float">
+            <value>31.0</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <value>11</value>
+        </param>
+        <param name="x" type="float">
+            <value>-32.0</value>
+        </param>
+        <param name="y" type="float">
+            <value>64.0</value>
+        </param>
+    </node>
+</ndbx>

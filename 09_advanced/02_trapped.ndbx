@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="2000.0"/>
+    <var name="canvasHeight" value="2000.0"/>
+    <var name="canvasBackground" value="#ffffff00"/>
+    <node name="compound1" prototype="corevector.compound" x="590" y="350">
+        <param name="function">
+            <value>intersected</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <value>#8f813839</value>
+        </param>
+        <param name="strokeWidth">
+            <value>1.0</value>
+        </param>
+    </node>
+    <node name="compound2" prototype="corevector.compound" x="660" y="100">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="fill">
+            <value>#00000000</value>
+        </param>
+        <param name="strokeWidth">
+            <value>1.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="10" y="0">
+        <param name="width">
+            <expression>random(stamp("num",0),60,100)</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+    </node>
+    <node name="ellipse2" prototype="corevector.ellipse" x="260" y="-90">
+        <param name="width">
+            <expression>ellipse1.width/4.0</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+    </node>
+    <node name="ellipse3" prototype="corevector.ellipse" x="150" y="100">
+        <param name="width">
+            <expression>ellipse2.width/4.0</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+    </node>
+    <node name="ellipse4" prototype="corevector.ellipse" x="150" y="200">
+        <param name="width">
+            <expression>ellipse2.width</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+        <param name="fill">
+            <value>#fafafaff</value>
+        </param>
+    </node>
+    <node name="eye" prototype="corevector.place" x="390" y="100"/>
+    <node name="hair1" prototype="hair.hair" x="430" y="290">
+        <param name="stroke">
+            <expression>hsb(head.fill.hue, 0.9, .55, 1.00)</expression>
+        </param>
+        <param name="strokewidth">
+            <value>0.25</value>
+        </param>
+    </node>
+    <node name="head" prototype="corevector.compound" x="480" y="-60">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <expression>hsb(random(stamp("num",0),.02,.75),.8,.8)</expression>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="560" y="210"/>
+    <node name="merge2" prototype="corevector.merge" rendered="true" x="760" y="560">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Geometry
+
+def cook(self):
+  g = Geometry()
+  if self.shapes is None: return g
+  for shape in self.shapes:
+      if shape is None: continue
+      g.extend(shape)
+  return g]]></value>
+        </param>
+    </node>
+    <node name="merge3" prototype="corevector.merge" x="280" y="140"/>
+    <node name="place1" prototype="corevector.place" x="390" y="-80"/>
+    <node name="place2" prototype="corevector.place" x="430" y="510">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM*seed+seed</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <expression>FRAME</expression>
+        </param>
+    </node>
+    <node name="place3" prototype="corevector.place" x="420" y="390">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM*FRAME+FRAME</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="70" y="440">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path
+
+def cook(self):
+    p = Path()
+    if self.rx == 0 and self.ry == 0:
+        p.ellipse(self.x, self.y, self.width, self.height)
+    else:
+        p.roundedRect(self.x, self.y, self.width, self.height, self.rx, self.ry)
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="width">
+            <value>350.0</value>
+        </param>
+        <param name="height">
+            <value>350.0</value>
+        </param>
+        <param name="fill">
+            <value>#408f8f41</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.5</value>
+        </param>
+    </node>
+    <node name="rect2" prototype="corevector.rect" x="590" y="480">
+        <param name="width">
+            <value>900.0</value>
+        </param>
+        <param name="height">
+            <value>900.0</value>
+        </param>
+    </node>
+    <node name="resample1" prototype="corevector.resample" x="700" y="360">
+        <param name="length">
+            <value>25.0</value>
+        </param>
+    </node>
+    <node name="scatter1" prototype="corevector.scatter" x="260" y="0">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Point
+from random import seed, uniform
+
+def cook(self):
+    seed(self.seed)
+    random() 
+    if self.shape is None: return None
+    bx, by, bw, bh = list(self.shape.bounds)
+    p = Path()
+    for i in xrange(self.amount):
+        tries = 100
+        while tries > 0:
+            pt = Point(bx + uniform(0, 1) * bw, by + uniform(0, 1) * bh)
+            if self.shape.contains(pt):
+                break
+            tries -= 1
+        if tries:
+            p.moveto(pt.x, pt.y)
+        else:
+            pass # add warning: no points found on the path
+
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="amount">
+            <value>1</value>
+        </param>
+        <param name="seed">
+            <expression>int(random(stamp("num",0),2,200000))*scatter3.seed</expression>
+        </param>
+    </node>
+    <node name="scatter2" prototype="corevector.scatter" x="330" y="290">
+        <param name="amount">
+            <value>2000</value>
+        </param>
+        <param name="seed">
+            <value>1</value>
+        </param>
+    </node>
+    <node name="scatter3" prototype="corevector.scatter" x="250" y="440">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Point
+from random import seed, uniform
+
+def cook(self):
+    seed(self.seed)
+    if self.shape is None: return None
+    bx, by, bw, bh = list(self.shape.bounds)
+    p = Path()
+    random()
+    for i in xrange(self.amount):
+        tries = 100
+        while tries > 0:
+            pt = Point(bx + uniform(0, 1) * bw, by + uniform(0, 1) * bh)
+            if self.shape.contains(pt):
+                break
+            tries -= 1
+        if tries:
+            p.moveto(pt.x, pt.y)
+        else:
+            pass # add warning: no points found on the path
+
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="amount">
+            <value>5</value>
+        </param>
+        <param name="seed">
+            <expression>10+FRAME</expression>
+        </param>
+    </node>
+    <node name="spikelise1" prototype="spikes.spikes" x="770" y="260">
+        <param name="height">
+            <value>10.0</value>
+        </param>
+        <param name="distAB">
+            <value>25.0</value>
+        </param>
+        <param name="curvature">
+            <value>0.7900015</value>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="160" y="0">
+        <param name="sx">
+            <value>60.0</value>
+        </param>
+        <param name="sy">
+            <value>60.0</value>
+        </param>
+    </node>
+    <node name="transform2" prototype="corevector.transform" x="40" y="290">
+        <param name="sx">
+            <value>190.0</value>
+        </param>
+        <param name="sy">
+            <value>190.0</value>
+        </param>
+    </node>
+    <node name="transform4" prototype="corevector.transform" x="180" y="570">
+        <param name="sx">
+            <value>50.0</value>
+        </param>
+        <param name="sy">
+            <value>50.0</value>
+        </param>
+    </node>
+    <conn input="merge2" output="rect1" port="shapes"/>
+    <conn input="merge2" output="compound1" port="shapes"/>
+    <conn input="merge2" output="place2" port="shapes"/>
+    <conn input="merge2" output="spikelise1" port="shapes"/>
+    <conn input="transform1" output="ellipse1" port="shape"/>
+    <conn input="scatter1" output="transform1" port="shape"/>
+    <conn input="head" output="place1" port="shape"/>
+    <conn input="head" output="ellipse1" port="shapeB"/>
+    <conn input="place1" output="ellipse2" port="shape"/>
+    <conn input="place1" output="scatter1" port="template"/>
+    <conn input="eye" output="scatter1" port="template"/>
+    <conn input="merge1" output="head" port="shapes"/>
+    <conn input="merge1" output="eye" port="shapes"/>
+    <conn input="scatter2" output="head" port="shape"/>
+    <conn input="hair1" output="scatter2" port="shape"/>
+    <conn input="merge1" output="hair1" port="shapes"/>
+    <conn input="place2" output="scatter3" port="template"/>
+    <conn input="place2" output="merge1" port="shape"/>
+    <conn input="place3" output="scatter3" port="template"/>
+    <conn input="compound1" output="place3" port="shape"/>
+    <conn input="compound1" output="rect2" port="shapeB"/>
+    <conn input="transform2" output="ellipse1" port="shape"/>
+    <conn input="place3" output="transform2" port="shape"/>
+    <conn input="spikelise1" output="resample1" port="shape"/>
+    <conn input="merge3" output="ellipse4" port="shapes"/>
+    <conn input="merge3" output="ellipse3" port="shapes"/>
+    <conn input="eye" output="merge3" port="shape"/>
+    <conn input="transform4" output="rect1" port="shape"/>
+    <conn input="scatter3" output="transform4" port="shape"/>
+    <conn input="compound2" output="compound1" port="shapeB"/>
+    <conn input="compound2" output="rect1" port="shape"/>
+    <conn input="resample1" output="compound1" port="shape"/>
+</ndbx>

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="cars" prototype="corevector.geonet" x="20" y="30">
+        <param name="car" type="int">
+            <expression>stamp("n",0)</expression>
+        </param>
+        <node name="rect1" prototype="corevector.rect" x="20" y="20">
+            <param name="height">
+                <value>35.0</value>
+            </param>
+        </node>
+        <node name="rect3" prototype="corevector.rect" x="20" y="220">
+            <param name="height">
+                <value>35.0</value>
+            </param>
+        </node>
+        <node name="switch1" prototype="corevector.switch" rendered="true" x="390" y="20">
+            <param name="select">
+                <expression>parent.car</expression>
+            </param>
+        </node>
+        <node name="rect2" prototype="corevector.rect" x="20" y="120">
+            <param name="x">
+                <value>-12.0</value>
+            </param>
+            <param name="y">
+                <value>-15.0</value>
+            </param>
+            <param name="width">
+                <value>50.0</value>
+            </param>
+            <param name="height">
+                <value>50.0</value>
+            </param>
+        </node>
+        <node name="edit1" prototype="corevector.edit" x="240" y="430">
+            <param name="pointDeltas">
+                <value>P 3 -33.000 -17.000</value>
+            </param>
+        </node>
+        <node name="merge1" prototype="corevector.merge" x="160" y="20"/>
+        <node name="merge2" prototype="corevector.merge" x="160" y="220"/>
+        <node name="merge3" prototype="corevector.merge" x="270" y="330"/>
+        <node name="rect4" prototype="corevector.rect" x="20" y="320">
+            <param name="x">
+                <value>25.0</value>
+            </param>
+            <param name="y">
+                <value>-15.0</value>
+            </param>
+            <param name="width">
+                <value>50.0</value>
+            </param>
+            <param name="height">
+                <value>50.0</value>
+            </param>
+        </node>
+        <node name="rect5" prototype="corevector.rect" x="130" y="330">
+            <param name="height">
+                <value>35.0</value>
+            </param>
+        </node>
+        <node name="rect6" prototype="corevector.rect" x="130" y="430">
+            <param name="x">
+                <value>25.0</value>
+            </param>
+            <param name="y">
+                <value>-15.0</value>
+            </param>
+            <param name="width">
+                <value>50.0</value>
+            </param>
+            <param name="height">
+                <value>50.0</value>
+            </param>
+        </node>
+        <conn input="merge1" output="rect1" port="shapes"/>
+        <conn input="merge1" output="rect2" port="shapes"/>
+        <conn input="merge2" output="rect3" port="shapes"/>
+        <conn input="merge2" output="rect4" port="shapes"/>
+        <conn input="merge3" output="rect5" port="shapes"/>
+        <conn input="edit1" output="rect6" port="shape"/>
+        <conn input="merge3" output="edit1" port="shapes"/>
+        <conn input="switch1" output="merge1" port="shapes"/>
+        <conn input="switch1" output="merge2" port="shapes"/>
+        <conn input="switch1" output="merge3" port="shapes"/>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="210" y="120">
+        <param name="width">
+            <value>579.0</value>
+        </param>
+        <param name="height">
+            <value>498.0</value>
+        </param>
+        <param name="rows">
+            <value>5</value>
+        </param>
+        <param name="columns">
+            <value>5</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="210" y="30"/>
+    <node name="place1" prototype="corevector.place" rendered="true" x="310" y="30">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>n=CNUM</value>
+        </param>
+    </node>
+    <node name="tires" prototype="corevector.geonet" x="20" y="120">
+        <param name="tires" type="int">
+            <expression>stamp("n",0)</expression>
+        </param>
+        <node name="rect1" prototype="corevector.rect" x="130" y="110">
+            <param name="x">
+                <value>41.0</value>
+            </param>
+            <param name="width">
+                <value>120.0</value>
+            </param>
+            <param name="height">
+                <value>36.0</value>
+            </param>
+            <param name="rx">
+                <value>15.0</value>
+            </param>
+            <param name="ry">
+                <value>15.0</value>
+            </param>
+            <param name="fill">
+                <value>#00000029</value>
+            </param>
+            <param name="strokeWidth">
+                <value>1.0</value>
+            </param>
+        </node>
+        <node name="ellipse4" prototype="corevector.ellipse" x="30" y="430">
+            <param name="width">
+                <value>60.0</value>
+            </param>
+            <param name="height">
+                <value>60.0</value>
+            </param>
+        </node>
+        <node name="transform1" prototype="corevector.transform" x="290" y="330">
+            <param name="ty">
+                <value>15.0</value>
+            </param>
+        </node>
+        <node name="ellipse2" prototype="corevector.ellipse" x="30" y="210">
+            <param name="width">
+                <value>30.0</value>
+            </param>
+            <param name="height">
+                <value>30.0</value>
+            </param>
+        </node>
+        <node name="transform2" prototype="corevector.transform" x="290" y="430">
+            <param name="ty">
+                <value>15.0</value>
+            </param>
+        </node>
+        <node name="ellipse3" prototype="corevector.ellipse" x="30" y="330">
+            <param name="width">
+                <value>30.0</value>
+            </param>
+            <param name="height">
+                <value>30.0</value>
+            </param>
+        </node>
+        <node name="ellipse1" prototype="corevector.ellipse" x="30" y="30">
+            <param name="width">
+                <value>30.0</value>
+            </param>
+            <param name="height">
+                <value>30.0</value>
+            </param>
+        </node>
+        <node name="copy1" prototype="corevector.copy" x="130" y="30">
+            <param name="copies">
+                <value>4</value>
+            </param>
+            <param name="tx">
+                <value>28.0</value>
+            </param>
+        </node>
+        <node name="copy2" prototype="corevector.copy" x="130" y="210">
+            <param name="copies">
+                <value>2</value>
+            </param>
+            <param name="tx">
+                <value>84.0</value>
+            </param>
+        </node>
+        <node name="copy3" prototype="corevector.copy" x="200" y="330">
+            <param name="copies">
+                <value>2</value>
+            </param>
+            <param name="tx">
+                <value>84.0</value>
+            </param>
+            <param name="sx">
+                <value>60.0</value>
+            </param>
+            <param name="sy">
+                <value>70.0</value>
+            </param>
+        </node>
+        <node name="copy4" prototype="corevector.copy" x="200" y="430">
+            <param name="copies">
+                <value>2</value>
+            </param>
+            <param name="tx">
+                <value>84.0</value>
+            </param>
+            <param name="sx">
+                <value>-30.0</value>
+            </param>
+            <param name="sy">
+                <value>-30.0</value>
+            </param>
+        </node>
+        <node name="align2" prototype="corevector.align" x="120" y="430">
+            <param name="halign">
+                <value>center</value>
+            </param>
+        </node>
+        <node name="align1" prototype="corevector.align" x="120" y="330">
+            <param name="halign">
+                <value>center</value>
+            </param>
+        </node>
+        <node name="switch1" prototype="corevector.switch" rendered="true" x="450" y="240">
+            <param name="select">
+                <expression>parent.tires</expression>
+            </param>
+        </node>
+        <node name="merge1" prototype="corevector.merge" x="250" y="30"/>
+        <conn input="copy1" output="ellipse1" port="shape"/>
+        <conn input="merge1" output="copy1" port="shapes"/>
+        <conn input="merge1" output="rect1" port="shapes"/>
+        <conn input="copy2" output="ellipse2" port="shape"/>
+        <conn input="switch1" output="merge1" port="shapes"/>
+        <conn input="switch1" output="copy2" port="shapes"/>
+        <conn input="align1" output="ellipse3" port="shape"/>
+        <conn input="copy3" output="align1" port="shape"/>
+        <conn input="transform1" output="copy3" port="shape"/>
+        <conn input="switch1" output="transform1" port="shapes"/>
+        <conn input="transform2" output="copy4" port="shape"/>
+        <conn input="copy4" output="align2" port="shape"/>
+        <conn input="align2" output="ellipse4" port="shape"/>
+        <conn input="switch1" output="transform2" port="shapes"/>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="110" y="120">
+        <param name="tx">
+            <value>-40.0</value>
+        </param>
+        <param name="ty">
+            <value>35.0</value>
+        </param>
+    </node>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="transform1" output="tires" port="shape"/>
+    <conn input="merge1" output="transform1" port="shapes"/>
+    <conn input="merge1" output="cars" port="shapes"/>
+    <conn input="place1" output="merge1" port="shape"/>
+</ndbx>

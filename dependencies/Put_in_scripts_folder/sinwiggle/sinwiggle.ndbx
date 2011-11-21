@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="sinwiggle" prototype="corevector.wiggle" x="330" y="40">
+        <param name="_code">
+            <value type="python"><![CDATA[from random import seed, uniform
+from math import *
+
+def sin_wiggle(shape, start, wx, wy, freq):
+    i = start
+    for point in shape.points:
+        point.x += sin(i) * wx
+        point.y += cos(i) * wy
+        i += freq / 100.0
+
+def cook(self):
+    if self.shape is None: return None
+    new_shape = self.shape.clone()
+    if self.scope == "points":
+        sin_wiggle(new_shape, self.start, self.wx, self.wy, self.frequency)
+    elif self.scope == "contours":
+        for path in new_shape.paths:
+            for contour in path.contours:
+                sin_wiggle(contour, self.start, self.wx, self.wy, self.frequency)
+    elif self.scope == "paths":
+        for path in new_shape.paths:
+            sin_wiggle(path, self.start, self.wx, self.wy, self.frequency)
+    return new_shape]]></value>
+        </param>
+        <param name="_image">
+            <value>sinwiggle.png</value>
+        </param>
+        <param name="scope">
+            <value>paths</value>
+        </param>
+        <param name="wx">
+            <value>9.0</value>
+        </param>
+        <param name="wy">
+            <value>-8.0</value>
+        </param>
+        <param name="frequency" type="float">
+            <value>23.0</value>
+        </param>
+        <param name="start" type="float">
+            <value>64.0</value>
+        </param>
+    </node>
+</ndbx>

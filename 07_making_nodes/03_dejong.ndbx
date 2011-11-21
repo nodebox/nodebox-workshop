@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="attractor" prototype="corevector.generator" x="30" y="100">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path
+from math import sin,cos
+
+def cook(self):
+   p = Path()
+   p.fill = None
+   a, b, c, d = 2.01,-2.53,1.61,-0.33
+   x0, y0 = 0.0,0.0
+   scale = 150.0
+   for i in xrange(5000):
+       x1 = sin(a*y0)-cos(b*x0)
+       y1 = sin(c*x0)-cos(d*y0)
+       p.addPoint(x1*scale, y1*scale)
+       x0, y0 = x1, y1
+   return p.asGeometry()]]></value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="30" y="20">
+        <param name="width">
+            <value>2.0</value>
+        </param>
+        <param name="height">
+            <value>2.0</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="140" y="60"/>
+    <node name="transform1" prototype="corevector.transform" rendered="true" x="230" y="60">
+        <param name="ty">
+            <value>-128.0</value>
+        </param>
+        <param name="sy">
+            <value>-100.0</value>
+        </param>
+    </node>
+    <conn input="transform1" output="place1" port="shape"/>
+    <conn input="place1" output="ellipse1" port="shape"/>
+    <conn input="place1" output="attractor" port="template"/>
+</ndbx>

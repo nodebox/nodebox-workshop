@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="compound1" prototype="corevector.compound" x="180" y="70">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="40" y="60">
+        <param name="x">
+            <value>81.0</value>
+        </param>
+        <param name="y">
+            <value>72.0</value>
+        </param>
+        <param name="width">
+            <value>338.0</value>
+        </param>
+        <param name="height">
+            <value>350.0</value>
+        </param>
+    </node>
+    <node name="import1" prototype="corevector.import" x="40" y="140">
+        <param name="file">
+            <value>acorn.svg</value>
+        </param>
+    </node>
+    <node name="textonpath1" prototype="corevector.textonpath" rendered="true" x="310" y="70">
+        <param name="text">
+            <value>NODEBOX 2 in a nutshell</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>18.0</value>
+        </param>
+        <param name="start">
+            <value>17.0</value>
+        </param>
+        <param name="dy">
+            <value>3.0</value>
+        </param>
+        <param name="fill">
+            <value>#ffffffff</value>
+        </param>
+    </node>
+    <conn input="compound1" output="import1" port="shapeB"/>
+    <conn input="compound1" output="ellipse1" port="shape"/>
+    <conn input="textonpath1" output="compound1" port="shape"/>
+</ndbx>

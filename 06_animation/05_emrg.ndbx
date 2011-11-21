@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#060606ff"/>
+    <var name="canvasHeight" value="768.0"/>
+    <var name="canvasWidth" value="1024.0"/>
+    <node name="drawline" prototype="corevector.compound" x="390" y="110">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Geometry, Color,Path
+from random import uniform
+from nodebox.util.Geometry import distance
+from math import *
+
+def cook(self):
+     p = Path()
+     g = Geometry()
+     if self.shape is None: return None
+     if self.shapeB is None: return self.shape.clone()
+     pA = self.shape.points
+     pB = self.shapeB.points
+          
+     for i in range(len(pA)):
+         p1 = pA[i]
+         p2 = pB[i]
+         d = distance(p1.x,p1.y,p2.x,p2.y)
+         p = Path()
+         p.strokeColor = self.stroke
+         p.strokeWidth = self.strokeWidth
+         p.addPoint(p1.x,p1.y)
+         p.addPoint(p2.x,p2.y)  
+         g.add(p)
+     return g]]></value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <value>#d704000a</value>
+        </param>
+        <param name="stroke">
+            <value>#ffffff28</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.5</value>
+        </param>
+    </node>
+    <node name="magnifier" prototype="corevector.filter" x="310" y="20">
+        <param name="_code">
+            <value type="python"><![CDATA[from math import *
+from nodebox.graphics import Transform, Point
+
+def magnify(node, point, center):
+    dx = point.x - node.centerX + center.x
+    dy = point.y - node.centerY + center.y
+    dist_to_center = sqrt(dx * dx + dy * dy)
+    
+    if dist_to_center < node.radius:
+        t = Transform()
+        dist_to_center /= node.radius
+        t.translate(node.centerX+dx, node.centerY+dy)
+        t.scale(node.whirl * pow(1.0 - dist_to_center, 2.0),node.whirl * pow(1.0 - dist_to_center, 2.0))        
+        t.translate(-node.centerX-(dx*node.vertical*.01), -node.centerY-(dy*node.horizontal*.01))
+        pt = t.map(point)
+        point.x = pt.x
+        point.y = pt.y
+
+def cook(self):
+    if self.shape is None: return None
+    new_shape = self.shape.clone()
+    x, y, width, height = new_shape.bounds
+    center = Point( x + width / 2, y + height /2)
+    for point in new_shape.points:
+        magnify(self, point, center)
+    new_shape.invalidate()
+    return new_shape]]></value>
+        </param>
+        <param name="whirl" type="float">
+            <expression>wave(SINE,1,4,pulse*4)</expression>
+        </param>
+        <param min="0.0" name="radius" type="int">
+            <expression>wave(SINE,50,200,pulse)</expression>
+        </param>
+        <param name="centerX" type="float">
+            <expression>wave(SINE,-200,200,500)</expression>
+        </param>
+        <param name="centerY" type="float">
+            <expression>wave(SINE,-90,90,1000)</expression>
+        </param>
+        <param name="pulse" type="float">
+            <value>95.0</value>
+        </param>
+        <param bounding="hard" max="100.0" min="0.0" name="vertical" type="float">
+            <value>0.0</value>
+        </param>
+        <param bounding="hard" max="100.0" min="0.0" name="horizontal" type="float">
+            <value>0.0</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" rendered="true" x="510" y="20"/>
+    <node name="merge2" prototype="corevector.merge" x="100" y="20"/>
+    <node name="resample1" prototype="corevector.resample" x="180" y="20">
+        <param name="length">
+            <value>3.0</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="10" y="20">
+        <param name="text">
+            <value>EMRG</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>93.0</value>
+        </param>
+        <param name="y">
+            <value>35.0</value>
+        </param>
+        <param name="fill">
+            <expression>color(0.02, 0.16, 0.21, 0.98)</expression>
+        </param>
+        <param name="stroke">
+            <value>#fafafa64</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.5</value>
+        </param>
+    </node>
+    <conn input="merge2" output="textpath1" port="shapes"/>
+    <conn input="merge1" output="drawline" port="shapes"/>
+    <conn input="merge1" output="magnifier" port="shapes"/>
+    <conn input="drawline" output="magnifier" port="shape"/>
+    <conn input="drawline" output="resample1" port="shapeB"/>
+    <conn input="magnifier" output="resample1" port="shape"/>
+    <conn input="resample1" output="merge2" port="shape"/>
+</ndbx>

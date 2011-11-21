@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="merge1" prototype="corevector.merge" rendered="true" x="310" y="70"/>
+<node name="resample1" prototype="corevector.resample" x="120" y="70"/>
+<node name="resample2" prototype="corevector.resample" x="120" y="170"/>
+<node name="snap1" prototype="corevector.snap" x="200" y="70">
+<param name="distance">
+<value>9.0</value>
+</param>
+</node>
+<node name="snap2" prototype="corevector.snap" x="200" y="170">
+<param name="distance">
+<value>13.0</value>
+</param>
+</node>
+<node name="textpath1" prototype="corevector.textpath" x="40" y="70">
+<param name="text">
+<value>HELLO</value>
+</param>
+<param name="font">
+<value>Arial-Black</value>
+</param>
+<param name="size">
+<value>49.0</value>
+</param>
+</node>
+<node name="textpath2" prototype="corevector.textpath" x="40" y="170">
+<param name="text">
+<value>WORLD</value>
+</param>
+<param name="font">
+<value>Arial-Black</value>
+</param>
+<param name="size">
+<value>49.0</value>
+</param>
+<param name="y">
+<value>50.0</value>
+</param>
+</node>
+<conn input="snap2" output="resample2" port="shape"/>
+<conn input="resample1" output="textpath1" port="shape"/>
+<conn input="resample2" output="textpath2" port="shape"/>
+<conn input="merge1" output="snap1" port="shapes"/>
+<conn input="merge1" output="snap2" port="shapes"/>
+<conn input="snap1" output="resample1" port="shape"/>
+</ndbx>

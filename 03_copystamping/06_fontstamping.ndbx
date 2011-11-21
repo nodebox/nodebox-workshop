@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="grid1" prototype="corevector.grid" x="50" y="160">
+        <param name="width">
+            <value>550.0</value>
+        </param>
+        <param name="rows">
+            <value>4</value>
+        </param>
+        <param name="columns">
+            <value>5</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" rendered="true" x="150" y="60">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>nummer=CNUM</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="30" y="50">
+        <param name="text">
+            <expression>["one","two","three"][stamp("nummer",0)%3]</expression>
+        </param>
+        <param name="font">
+            <expression>["Georgia","Verdana"][stamp("nummer",0)%2]</expression>
+        </param>
+        <param name="size">
+            <value>44.0</value>
+        </param>
+    </node>
+    <conn input="place1" output="textpath1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+</ndbx>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="generator1" prototype="corevector.generator" rendered="true" x="90" y="80">
+        <param name="_code">
+            <value type="python"><![CDATA[# This node serves as a template for writing your own vector generators.
+# Read the code in cook and replace it with your own.
+from nodebox.graphics import Path
+import supershape
+reload(supershape)
+from random import seed,uniform
+
+
+def cook(self):
+    seed(self.seed)
+    p = Path()
+    
+    x = self.x
+    y = self.y
+    w = self.width
+    h = self.height
+    m = self.m
+    n1 = self.n1
+    n2 = self.n2
+    n3 = self.n3
+    
+    if n1 == 0:
+      n1 = 0.001
+    p = supershape.path(x, y, w, h, m, n1, n2, n3)
+
+    # Return the path object.
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="_image">
+            <value>supershape.png</value>
+        </param>
+        <param name="x" type="float">
+            <value>168.0</value>
+        </param>
+        <param name="y" type="float">
+            <value>0.0</value>
+        </param>
+        <param name="width" type="float">
+            <value>100.0</value>
+        </param>
+        <param name="height" type="float">
+            <value>100.0</value>
+        </param>
+        <param bounding="hard" min="1.0" name="m" type="float">
+            <value>10.0</value>
+        </param>
+        <param name="n1" type="float">
+            <value>1.0651326</value>
+        </param>
+        <param name="n2" type="float">
+            <value>-0.7000021</value>
+        </param>
+        <param bounding="hard" max="2.0" min="0.0" name="n3" type="float">
+            <value>0.21000001</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <value>3</value>
+        </param>
+    </node>
+</ndbx>

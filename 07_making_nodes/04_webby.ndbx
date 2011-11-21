@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="500.0"/>
+    <var name="canvasHeight" value="500.0"/>
+    <node name="resample1" prototype="corevector.resample" x="110" y="20">
+        <param name="length">
+            <value>1.0</value>
+        </param>
+        <param name="points">
+            <value>322</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="30" y="20">
+        <param name="text">
+            <value>webby</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>120.0</value>
+        </param>
+    </node>
+    <node name="webby" prototype="corevector.filter" rendered="true" x="190" y="20">
+        <param name="_code">
+            <value type="python"><![CDATA[from random import uniform, choice, seed
+from nodebox.graphics import Path,Geometry
+from nodebox.util.Geometry import distance
+   
+def cook(self):
+    seed(self.seed)
+    if self.shape is None: return None
+    shape_points = self.shape.points
+    g = Geometry()
+    for i, pt1 in enumerate(shape_points):
+        pt2 = choice(shape_points)
+        d = distance(pt1.x, pt1.y, pt2.x, pt2.y)
+        if d < self.max_distance:
+            p = Path()
+            p.line(pt1.x, pt1.y, pt2.x, pt2.y)
+            p.strokeColor = self.stroke
+            p.strokeWidth = self.strokeWidth
+            g.add(p)
+    return g]]></value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <value>1</value>
+        </param>
+        <param name="max_distance" type="float">
+            <value>100.0</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param label="Stroke Width" name="strokeWidth" type="float">
+            <value>0.2</value>
+        </param>
+    </node>
+    <conn input="resample1" output="textpath1" port="shape"/>
+    <conn input="webby" output="resample1" port="shape"/>
+</ndbx>

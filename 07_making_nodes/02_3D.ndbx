@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="compound1" prototype="corevector.compound" rendered="true" x="310" y="50">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Geometry, Color,Path
+from random import uniform
+
+def cook(self):
+     p = Path()
+     g = Geometry()
+     if self.shape is None: return None
+     if self.shapeB is None: return self.shape.clone()
+     pA = self.shape.points
+     pB = self.shapeB.points
+     for i in range(len(pA)):
+         p1 = pA[i]
+         m = pB[i]
+         #print p1.x,p1
+         m2 = pB[i-1]
+         m3 = pA[i-1]
+         p = Path()
+         p.strokeColor = self.stroke
+         p.strokeWidth = self.strokeWidth
+         p.fill = Color(uniform(0,self.fill.red),self.fill.green,self.fill.blue,.7)
+         p.addPoint(p1.x,p1.y)
+         p.addPoint(m3.x,m3.y)  
+         p.addPoint(m2.x,m2.y)
+         p.addPoint(m.x,m.y)
+
+         g.add(p)
+     return g#p.asGeometry()]]></value>
+        </param>
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="invert_difference">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <value>#d704007a</value>
+        </param>
+        <param name="stroke">
+            <value>#0000007f</value>
+        </param>
+        <param name="strokeWidth">
+            <value>1.0</value>
+        </param>
+    </node>
+    <node name="resample1" prototype="corevector.resample" x="120" y="20">
+        <param name="method">
+            <value>amount</value>
+        </param>
+        <param name="length">
+            <value>5.0</value>
+        </param>
+        <param name="points">
+            <value>54</value>
+        </param>
+        <param name="perContour">
+            <value>1</value>
+        </param>
+    </node>
+    <node name="resample2" prototype="corevector.resample" x="120" y="110">
+        <param name="method">
+            <value>amount</value>
+        </param>
+        <param name="length">
+            <value>5.0</value>
+        </param>
+        <param name="points">
+            <expression>resample1.points</expression>
+        </param>
+        <param name="perContour">
+            <value>1</value>
+        </param>
+    </node>
+    <node name="sort1" prototype="corevector.sort" x="210" y="20">
+        <param name="scope">
+            <value>pt_g</value>
+        </param>
+        <param name="order">
+            <value>shift</value>
+        </param>
+        <param name="offset">
+            <value>20</value>
+        </param>
+    </node>
+    <node name="sort2" prototype="corevector.sort" x="210" y="110">
+        <param name="scope">
+            <value>pt_g</value>
+        </param>
+        <param name="order">
+            <value>shift</value>
+        </param>
+        <param name="offset">
+            <value>20</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="40" y="20">
+        <param name="text">
+            <value>3D</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>230.0</value>
+        </param>
+        <param name="fill">
+            <value>#00000090</value>
+        </param>
+    </node>
+    <node name="textpath2" prototype="corevector.textpath" x="40" y="110">
+        <param name="text">
+            <expression>textpath1.text</expression>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <value>329.0</value>
+        </param>
+        <param name="x">
+            <value>22.0</value>
+        </param>
+        <param name="y">
+            <value>47.0</value>
+        </param>
+        <param name="fill">
+            <value>#6a0000ff</value>
+        </param>
+    </node>
+    <conn input="compound1" output="sort1" port="shape"/>
+    <conn input="compound1" output="sort2" port="shapeB"/>
+    <conn input="sort2" output="resample2" port="shape"/>
+    <conn input="resample1" output="textpath1" port="shape"/>
+    <conn input="resample2" output="textpath2" port="shape"/>
+    <conn input="sort1" output="resample1" port="shape"/>
+</ndbx>

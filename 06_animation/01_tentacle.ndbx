@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="640.0"/>
+    <var name="canvasHeight" value="480.0"/>
+    <node name="align1" prototype="corevector.align" x="290" y="20">
+        <param name="halign">
+            <value>center</value>
+        </param>
+    </node>
+    <node name="copy1" prototype="corevector.copy" x="570" y="110">
+        <param name="copies">
+            <value>10</value>
+        </param>
+        <param name="order">
+            <value>rts</value>
+        </param>
+        <param name="tx">
+            <expression>wave(SINE,25,-25,70)</expression>
+        </param>
+        <param name="ty">
+            <expression>wave(SINE,-25,25,100)</expression>
+        </param>
+        <param name="r">
+            <expression>wave(SINE,tx,ty,40)</expression>
+        </param>
+        <param name="sx">
+            <value>-10.0</value>
+        </param>
+        <param name="sy">
+            <value>-10.0</value>
+        </param>
+    </node>
+    <node name="copy2" prototype="corevector.copy" x="110" y="20">
+        <param name="copies">
+            <value>5</value>
+        </param>
+        <param name="sx">
+            <value>-20.0</value>
+        </param>
+        <param name="sy">
+            <value>-20.0</value>
+        </param>
+    </node>
+    <node name="copy3" prototype="corevector.copy" x="190" y="260">
+        <param name="copies">
+            <value>5</value>
+        </param>
+        <param name="sx">
+            <value>-30.0</value>
+        </param>
+        <param name="sy">
+            <value>-15.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="20" y="20">
+        <param name="width">
+            <value>40.0</value>
+        </param>
+        <param name="height">
+            <value>25.0</value>
+        </param>
+        <param name="fill">
+            <value>#dad3007e</value>
+        </param>
+    </node>
+    <node name="ellipse2" prototype="corevector.ellipse" x="380" y="110">
+        <param name="fill">
+            <value>#7e400082</value>
+        </param>
+    </node>
+    <node name="ellipse3" prototype="corevector.ellipse" x="20" y="110">
+        <param name="width">
+            <value>20.0</value>
+        </param>
+        <param name="height">
+            <value>20.0</value>
+        </param>
+        <param name="fill">
+            <value>#da3400ff</value>
+        </param>
+    </node>
+    <node name="line1" prototype="corevector.line" x="110" y="180">
+        <param name="y">
+            <value>120.0</value>
+        </param>
+        <param name="angle">
+            <value>-90.0</value>
+        </param>
+        <param name="stroke">
+            <value>#820000ff</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="200" y="20"/>
+    <node name="polygon1" prototype="corevector.polygon" x="110" y="260">
+        <param name="y">
+            <value>161.0</value>
+        </param>
+        <param name="radius">
+            <value>30.0</value>
+        </param>
+        <param name="align">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <value>#e09f0064</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.1</value>
+        </param>
+    </node>
+    <node name="shapeonpath1" prototype="corevector.shapeonpath" x="470" y="110">
+        <param name="amount">
+            <value>26</value>
+        </param>
+        <param name="dist">
+            <value>19.0</value>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="380" y="20">
+        <param name="sx">
+            <value>30.0</value>
+        </param>
+        <param name="sy">
+            <value>30.0</value>
+        </param>
+    </node>
+    <node name="transform2" prototype="corevector.transform" rendered="true" x="660" y="110">
+        <param name="r">
+            <expression>FRAME</expression>
+        </param>
+    </node>
+    <conn input="merge1" output="line1" port="shapes"/>
+    <conn input="merge1" output="polygon1" port="shapes"/>
+    <conn input="align1" output="merge1" port="shape"/>
+    <conn input="copy1" output="shapeonpath1" port="shape"/>
+    <conn input="transform1" output="align1" port="shape"/>
+    <conn input="shapeonpath1" output="transform1" port="shape"/>
+    <conn input="shapeonpath1" output="ellipse2" port="template"/>
+    <conn input="copy2" output="ellipse1" port="shape"/>
+    <conn input="merge1" output="copy2" port="shapes"/>
+    <conn input="merge1" output="ellipse3" port="shapes"/>
+    <conn input="copy3" output="polygon1" port="shape"/>
+    <conn input="merge1" output="copy3" port="shapes"/>
+    <conn input="transform2" output="copy1" port="shape"/>
+</ndbx>

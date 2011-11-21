@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#000000ff"/>
+    <node name="pixImage" prototype="corevector.generator" x="20" y="110">
+        <param name="_code">
+            <value type="python"><![CDATA[from javax.imageio import ImageIO
+from java.io import File
+from nodebox.graphics import Path,Color
+from os.path import abspath                          
+
+def cook(self):
+    # Read in the file
+    img = ImageIO.read(File(abspath(self.image)))
+    raster = img.raster
+    w = raster.width
+    h = raster.height
+
+    detail = self.detail
+    p = Path()
+    p.fill = None
+    dummy_array = [0.0, 0.0, 0.0, 0.0]
+    for x in xrange(0, w, detail):
+        for y in xrange(0, h, detail):
+            r, g, b, a = raster.getPixel(x, y, dummy_array)
+            if r < 110:
+                p.addPoint(x-w/2, y-h/2)
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="image" type="string" widget="image">
+            <value>9111.jpg</value>
+        </param>
+        <param min="1.0" name="detail" type="float">
+            <value>6.0</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" rendered="true" x="120" y="20">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>myseed=CNUM</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="20" y="20">
+        <description>Customized: randomly chooses one letter from the input text.</description>
+        <param name="_code">
+            <value type="python"><![CDATA[from math import pow
+from nodebox.graphics import Path, Text
+from random import choice, seed
+
+def cook(self):
+    # In Jython, small seeds all give the same choices.
+    seed(pow(self.seed, 5))
+    tp = choice(self.text)
+    t = Text(tp, self.x, self.y, self.width, self.height)
+    t.fontName = self.font
+    t.fontSize = self.size
+    # valueOf requires a correct value: LEFT, CENTER, RIGHT or JUSTIFY. Anything else will
+    # make it crash. If users start doing crazy things and change the alignment, at least
+    # make sure you catch the error.
+    try:
+        t.align = Text.Align.valueOf(self.align)
+    except:
+        pass
+    p = t.path
+    p.fillColor = self.fill
+    if self.strokeWidth > 0:
+        p.strokeColor = self.stroke
+        p.strokeWidth = self.strokeWidth
+    else:
+        p.strokeColor = None
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="text">
+            <value>9/11</value>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <expression>pixImage.detail</expression>
+        </param>
+        <param name="fill">
+            <value>#fffcfeff</value>
+        </param>
+        <param name="seed" type="int" widget="seed">
+            <expression>stamp("myseed", 1)</expression>
+        </param>
+    </node>
+    <conn input="place1" output="pixImage" port="template"/>
+    <conn input="place1" output="textpath1" port="shape"/>
+</ndbx>

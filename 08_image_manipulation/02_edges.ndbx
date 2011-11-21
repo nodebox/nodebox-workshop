@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="1205.0"/>
+    <var name="canvasHeight" value="1468.0"/>
+    <node name="closest_pt" prototype="corevector.filter" x="170" y="150">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path,Geometry
+from nodebox.util.Geometry import distance
+from random import uniform
+
+
+def closest(self,x,y,control_points):
+    closest = 0
+    dist = None
+    for i in range(len(control_points)):
+        p = control_points[i]
+        d = distance(p.x,p.y,x,y)
+        if self.break:
+            if not d == 0 and d<dist or not dist:
+                closest = i
+                dist = d
+        else:
+            if d<dist or not dist:
+                closest = i
+                dist = d
+    return closest,dist
+
+def cook(self):
+    if self.shape is None: return None
+    p1c = self.shape.clone()
+    g = Geometry()
+    for i, point in enumerate(p1c.points):
+        p1 = Path()
+        x = point.x
+        y = point.y
+        c,d = closest(self,x,y,p1c.points)
+        p = p1c.points[c]
+        p1.strokeColor = self.stroke
+        p1.strokeWidth = self.strokeWidth
+        p1.line(x,y,p.x,p.y)
+        g.add(p1)
+    return g]]></value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param label="Stroke Width" name="strokeWidth" type="float">
+            <value>1.0</value>
+        </param>
+        <param name="break" type="int" widget="toggle">
+            <value>0</value>
+        </param>
+    </node>
+    <node name="edge_detect" prototype="corevector.generator" x="60" y="150">
+        <param name="_code">
+            <value type="python"><![CDATA[from javax.imageio import ImageIO
+from java.io import File
+from nodebox.graphics import Path,Color,Geometry
+from math import sqrt
+import os
+from os.path import abspath                          
+
+def pixel(c,c1,c2,edge):
+    r,g,b = c[0],c[1],c[2]
+    r1,g1,b1 = c1[0],c1[1],c1[2]
+    r2,g2,b2 = c2[0],c2[1],c2[2]
+    if (sqrt((r-r1)*(r-r1)+(g-g1)*(g-g1)+(b-b1)*(b-b1))>= edge) or (sqrt((r-r2)*(r-r2)+(g-g2)*(g-g2)+(b-b2)*(b-b2))>= edge):
+        return True
+
+
+def cook(self):
+    # Read in the file
+    img = ImageIO.read(File(abspath(self.image)))
+    raster = img.raster
+    w = raster.width
+    h = raster.height
+
+    detail = self.detail
+    dummy_array = [0.0, 0.0, 0.0, 0.0]
+    g = Geometry()
+    for x in xrange(0, w, detail):
+        for y in xrange(0, h, detail):
+            c = raster.getPixel(x, y, dummy_array)
+            try:
+                c1 = raster.getPixel(x+1, y, dummy_array)
+                c2 = raster.getPixel(x, y+1, dummy_array)
+            except:
+                pass
+            if pixel(c,c1,c2,self.edges):
+                p = Path()
+                p.fill = Color(c[0]/255,c[1]/255,c[2]/255)
+                p.addPoint(x, y)
+                g.add(p)
+    return g]]></value>
+        </param>
+        <param name="image" type="string" widget="image">
+            <value>9111.jpg</value>
+        </param>
+        <param name="detail" type="int">
+            <value>3</value>
+        </param>
+        <param name="edges" type="float">
+            <value>35.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="60" y="40">
+        <param name="width">
+            <expression>edge_detect.detail</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+        <param name="fill">
+            <expression>stamp("myfill",0)</expression>
+        </param>
+    </node>
+    <node name="fit1" prototype="corevector.fit" rendered="true" x="270" y="150">
+        <param name="width">
+            <value>500.0</value>
+        </param>
+        <param name="height">
+            <value>500.0</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="270" y="50">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>=</value>
+        </param>
+    </node>
+    <conn input="place1" output="ellipse1" port="shape"/>
+    <conn input="place1" output="edge_detect" port="template"/>
+    <conn input="closest_pt" output="edge_detect" port="shape"/>
+    <conn input="fit1" output="closest_pt" port="shape"/>
+</ndbx>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="web" prototype="corevector.filter" rendered="true" x="190" y="130">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path,Geometry
+from nodebox.util.Geometry import coordinates,distance
+from random import uniform,choice
+
+def cook(self):
+    if self.shape is None: return None
+    p1c = self.shape.clone()
+    g = Geometry()
+    for i, point in enumerate(p1c.points):
+        checkpoint = choice(p1c.points)
+        p1 = Path()
+        d =distance(point.x,point.y,checkpoint.x,checkpoint.y)
+        if d<self.maxdistance:
+            p1.line(point.x,point.y,checkpoint.x,checkpoint.y)
+            p1.strokeColor = self.stroke
+            g.add(p1)
+    return g]]></value>
+        </param>
+        <param name="_image">
+            <value>web.png</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#00000070</value>
+        </param>
+        <param name="maxdistance" type="float">
+            <value>40.0</value>
+        </param>
+    </node>
+</ndbx>

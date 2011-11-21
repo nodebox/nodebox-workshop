@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="closest" prototype="corevector.filter" rendered="true" x="210" y="100">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path,Geometry
+from nodebox.util.Geometry import distance
+from random import uniform
+
+
+def closest(self,x,y,control_points):
+    closest = 0
+    dist = None
+    for i in range(len(control_points)):
+        p = control_points[i]
+        d = distance(p.x,p.y,x,y)
+        if self.break:
+            if not d == 0 and d<dist or not dist:
+                closest = i
+                dist = d
+        else:
+            if d<dist or not dist:
+                closest = i
+                dist = d
+    return closest,dist
+
+def cook(self):
+    if self.shape is None: return None
+    p1c = self.shape.clone()
+    g = Geometry()
+    for i, point in enumerate(p1c.points):
+        p1 = Path()
+        x = point.x
+        y = point.y
+        c,d = closest(self,x,y,p1c.points)
+        p = p1c.points[c]
+        p1.strokeColor = self.stroke
+        p1.strokeWidth = self.strokewidth
+        p1.line(x,y,p.x,p.y)
+        g.add(p1)
+    return g]]></value>
+        </param>
+        <param name="_image">
+            <value>closest.png</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000000ff</value>
+        </param>
+        <param name="strokewidth" type="float">
+            <value>1.0</value>
+        </param>
+        <param name="break" type="int" widget="toggle">
+            <value>0</value>
+        </param>
+    </node>
+</ndbx>

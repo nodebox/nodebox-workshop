@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="1440.0"/>
+    <var name="canvasHeight" value="960.0"/>
+    <node name="align1" prototype="corevector.align" x="290" y="480">
+        <param name="halign">
+            <value>none</value>
+        </param>
+    </node>
+    <node name="align2" prototype="corevector.align" x="250" y="720">
+        <param name="y">
+            <value>-135.0</value>
+        </param>
+        <param name="halign">
+            <value>center</value>
+        </param>
+    </node>
+    <node name="color1" prototype="corevector.color" x="690" y="1500">
+        <param name="fill">
+            <expression>hsb(random(stamp("num",0),.15,.6), 0.9, 0.90, 0.14)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>0.1</value>
+        </param>
+    </node>
+    <node name="compound1" prototype="corevector.compound" x="70" y="1520">
+        <param name="function">
+            <value>subtracted</value>
+        </param>
+        <param name="fill">
+            <value>#00af0072</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.2</value>
+        </param>
+    </node>
+    <node name="copy2" prototype="corevector.copy" x="230" y="970">
+        <param name="copies">
+            <value>100</value>
+        </param>
+        <param name="order">
+            <value>rst</value>
+        </param>
+        <param name="tx">
+            <value>5.0</value>
+        </param>
+        <param name="ty">
+            <value>5.0</value>
+        </param>
+        <param name="r">
+            <expression>int(random(stamp("num",0),0,360))+FRAME/30.0</expression>
+        </param>
+        <param name="sx">
+            <value>-0.5</value>
+        </param>
+        <param name="sy">
+            <value>-0.5000004</value>
+        </param>
+    </node>
+    <node name="delete1" prototype="corevector.delete" x="400" y="1510">
+        <param name="operation">
+            <value>0</value>
+        </param>
+    </node>
+    <node name="ditwerktook" prototype="corevector.copy" x="290" y="400">
+        <param name="copies">
+            <value>20</value>
+        </param>
+        <param name="tx">
+            <value>15.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="290" y="550">
+        <param name="width">
+            <value>250.0</value>
+        </param>
+        <param name="height">
+            <value>200.0</value>
+        </param>
+    </node>
+    <node name="ellipse2" prototype="corevector.ellipse" x="-180" y="1550">
+        <param name="fill">
+            <value>#00000000</value>
+        </param>
+    </node>
+    <node name="ellipse3" prototype="corevector.ellipse" x="-180" y="1430">
+        <param name="width">
+            <value>40.0</value>
+        </param>
+        <param name="height">
+            <value>40.0</value>
+        </param>
+        <param name="fill">
+            <value>#bd0000ff</value>
+        </param>
+    </node>
+    <node name="ellipse4" prototype="corevector.ellipse" x="210" y="1700">
+        <param name="width">
+            <value>20.0</value>
+        </param>
+        <param name="height">
+            <value>28.0</value>
+        </param>
+        <param name="fill">
+            <value>#00000000</value>
+        </param>
+        <param name="strokeWidth">
+            <value>0.2</value>
+        </param>
+    </node>
+    <node name="ellipse5" prototype="corevector.ellipse" x="50" y="950">
+        <param name="fill">
+            <expression>hsb(random(stamp("num",0),0,1), 0.80, 0.90, 1)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>0.7</value>
+        </param>
+    </node>
+    <node name="fit1" prototype="corevector.fit" x="590" y="1500">
+        <param name="width">
+            <value>40.0</value>
+        </param>
+    </node>
+    <node name="fit2" prototype="corevector.fit" x="440" y="990">
+        <param name="width">
+            <value>150.0</value>
+        </param>
+        <param name="height">
+            <value>150.0</value>
+        </param>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="210" y="1800">
+        <param name="width">
+            <value>90.0</value>
+        </param>
+        <param name="height">
+            <value>90.0</value>
+        </param>
+        <param name="rows">
+            <value>5</value>
+        </param>
+        <param name="columns">
+            <value>5</value>
+        </param>
+    </node>
+    <node name="grid2" prototype="corevector.grid" x="700" y="1630">
+        <param name="width">
+            <value>400.0</value>
+        </param>
+        <param name="height">
+            <value>400.0</value>
+        </param>
+    </node>
+    <node name="grid3" prototype="corevector.grid" x="540" y="1060">
+        <param name="width">
+            <value>320.0</value>
+        </param>
+        <param name="height">
+            <value>320.0</value>
+        </param>
+        <param name="rows">
+            <value>3</value>
+        </param>
+        <param name="columns">
+            <value>3</value>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="510" y="1350"/>
+    <node name="merge2" prototype="corevector.merge" x="340" y="980"/>
+    <node name="merge3" prototype="corevector.merge" x="430" y="30"/>
+    <node name="oefening1" prototype="corevector.copy" rendered="true" x="150" y="30">
+        <param name="copies">
+            <value>50</value>
+        </param>
+        <param name="tx">
+            <value>6.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="oefening2" prototype="corevector.copy" x="150" y="120">
+        <param name="copies">
+            <value>50</value>
+        </param>
+        <param name="tx">
+            <value>6.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=100-CNUM*2</value>
+        </param>
+    </node>
+    <node name="oefening3" prototype="corevector.copy" x="150" y="220">
+        <param name="copies">
+            <value>50</value>
+        </param>
+        <param name="tx">
+            <value>6.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=random(CNUM,20,100)</value>
+        </param>
+    </node>
+    <node name="oefening4" prototype="corevector.copy" x="150" y="300">
+        <param name="copies">
+            <value>50</value>
+        </param>
+        <param name="tx">
+            <value>6.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=Math.sin(CNUM/4.0)*100</value>
+        </param>
+    </node>
+    <node name="oefening5" prototype="corevector.shapeonpath" x="470" y="490">
+        <param name="amount">
+            <value>115</value>
+        </param>
+        <param name="dist">
+            <value>4.390007</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+        <param name="keepGeometry">
+            <value>0</value>
+        </param>
+    </node>
+    <node name="oefening6" prototype="corevector.copy" x="400" y="720">
+        <param name="copies">
+            <value>18</value>
+        </param>
+        <param name="r">
+            <expression>360/copies</expression>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="oefening7" prototype="corevector.place" x="630" y="990">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="oefening8" prototype="corevector.place" x="840" y="1520">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="-30" y="1450"/>
+    <node name="place2" prototype="corevector.place" x="110" y="1350">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>size=CNUM</value>
+        </param>
+    </node>
+    <node name="place3" prototype="corevector.place" x="320" y="1710"/>
+    <node name="polygon1" prototype="corevector.polygon" x="100" y="720">
+        <param name="radius">
+            <value>26.0</value>
+        </param>
+        <param name="align">
+            <value>1</value>
+        </param>
+        <param name="fill">
+            <expression>hsb(stamp("num",0)/oefening6.copies, 0.70, 0.70, 1.00)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>0.5</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="20" y="30">
+        <param name="width">
+            <value>5.0</value>
+        </param>
+        <param name="height">
+            <expression>stamp("num",0)</expression>
+        </param>
+    </node>
+    <node name="rect2" prototype="corevector.rect" x="30" y="390">
+        <param name="width">
+            <value>6.0</value>
+        </param>
+        <param name="height">
+            <expression>Math.sin(stamp("num",0)/6.0)*100.0</expression>
+        </param>
+        <param name="fill">
+            <expression>color(random(stamp("num",0),0,1), 0.00, 0.00, 1.00)</expression>
+        </param>
+    </node>
+    <node name="rect3" prototype="corevector.rect" x="260" y="1100">
+        <param name="width">
+            <expression>WIDTH</expression>
+        </param>
+        <param name="height">
+            <expression>HEIGHT</expression>
+        </param>
+        <param name="fill">
+            <expression>hsb(random(stamp("num",0),0,1), 0.80, 0.25, 1)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>1.0</value>
+        </param>
+    </node>
+    <node name="resample1" prototype="corevector.resample" x="140" y="960">
+        <param name="length">
+            <value>57.0</value>
+        </param>
+    </node>
+    <node name="scatter1" prototype="corevector.scatter" x="10" y="1690">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path, Point
+from random import seed, uniform
+
+def cook(self):
+    seed(self.seed)
+    random()
+    if self.shape is None: return None
+    bx, by, bw, bh = list(self.shape.bounds)
+    p = Path()
+    for i in xrange(self.amount):
+        tries = 100
+        while tries > 0:
+            pt = Point(bx + uniform(0, 1) * bw, by + uniform(0, 1) * bh)
+            if self.shape.contains(pt):
+                break
+            tries -= 1
+        if tries:
+            p.moveto(pt.x, pt.y)
+        else:
+            pass # add warning: no points found on the path
+
+    return p.asGeometry()]]></value>
+        </param>
+        <param name="amount">
+            <value>2</value>
+        </param>
+        <param name="seed">
+            <expression>stamp("num",0)</expression>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="-80" y="1690">
+        <param name="sx">
+            <value>50.0</value>
+        </param>
+        <param name="sy">
+            <value>50.0</value>
+        </param>
+    </node>
+    <node name="transform2" prototype="corevector.transform" x="-30" y="1340">
+        <param name="sx">
+            <expression>random(stamp("size",0)+stamp("num",0),20,40)</expression>
+        </param>
+        <param name="sy">
+            <expression>sx</expression>
+        </param>
+    </node>
+    <node name="transform4" prototype="corevector.transform" x="280" y="30"/>
+    <node name="transform5" prototype="corevector.transform" x="290" y="120">
+        <param name="ty">
+            <value>100.0</value>
+        </param>
+    </node>
+    <node name="transform6" prototype="corevector.transform" x="290" y="220">
+        <param name="ty">
+            <value>200.0</value>
+        </param>
+    </node>
+    <node name="transform7" prototype="corevector.transform" x="290" y="300">
+        <param name="ty">
+            <value>300.0</value>
+        </param>
+    </node>
+    <conn input="merge2" output="rect3" port="shapes"/>
+    <conn input="oefening1" output="rect1" port="shape"/>
+    <conn input="oefening2" output="rect1" port="shape"/>
+    <conn input="oefening3" output="rect1" port="shape"/>
+    <conn input="oefening4" output="rect1" port="shape"/>
+    <conn input="ditwerktook" output="rect2" port="shape"/>
+    <conn input="align1" output="rect2" port="shape"/>
+    <conn input="oefening5" output="align1" port="shape"/>
+    <conn input="oefening5" output="ellipse1" port="template"/>
+    <conn input="place1" output="ellipse3" port="shape"/>
+    <conn input="place1" output="scatter1" port="template"/>
+    <conn input="merge1" output="ellipse2" port="shapes"/>
+    <conn input="transform1" output="ellipse2" port="shape"/>
+    <conn input="scatter1" output="transform1" port="shape"/>
+    <conn input="compound1" output="ellipse2" port="shape"/>
+    <conn input="compound1" output="place1" port="shapeB"/>
+    <conn input="merge1" output="compound1" port="shapes"/>
+    <conn input="transform2" output="ellipse3" port="shape"/>
+    <conn input="place2" output="transform2" port="shape"/>
+    <conn input="place2" output="scatter1" port="template"/>
+    <conn input="merge1" output="place2" port="shapes"/>
+    <conn input="place3" output="grid1" port="template"/>
+    <conn input="merge1" output="delete1" port="shapes"/>
+    <conn input="delete1" output="place3" port="shape"/>
+    <conn input="delete1" output="compound1" port="bounding"/>
+    <conn input="place3" output="ellipse4" port="shape"/>
+    <conn input="fit1" output="merge1" port="shape"/>
+    <conn input="transform4" output="oefening1" port="shape"/>
+    <conn input="transform5" output="oefening2" port="shape"/>
+    <conn input="transform6" output="oefening3" port="shape"/>
+    <conn input="transform7" output="oefening4" port="shape"/>
+    <conn input="merge3" output="transform4" port="shapes"/>
+    <conn input="merge3" output="transform5" port="shapes"/>
+    <conn input="merge3" output="transform6" port="shapes"/>
+    <conn input="merge3" output="transform7" port="shapes"/>
+    <conn input="resample1" output="ellipse5" port="shape"/>
+    <conn input="copy2" output="resample1" port="shape"/>
+    <conn input="merge2" output="copy2" port="shapes"/>
+    <conn input="fit2" output="merge2" port="shape"/>
+    <conn input="oefening7" output="fit2" port="shape"/>
+    <conn input="oefening7" output="grid3" port="template"/>
+    <conn input="color1" output="fit1" port="shape"/>
+    <conn input="oefening8" output="color1" port="shape"/>
+    <conn input="oefening8" output="grid2" port="template"/>
+    <conn input="align2" output="polygon1" port="shape"/>
+    <conn input="oefening6" output="align2" port="shape"/>
+</ndbx>

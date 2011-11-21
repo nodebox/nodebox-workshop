@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="copy1" prototype="corevector.copy" x="170" y="80">
+        <param name="copies">
+            <value>3</value>
+        </param>
+        <param name="sy">
+            <value>-30.0</value>
+        </param>
+    </node>
+    <node name="copy2" prototype="corevector.copy" rendered="true" x="360" y="80">
+        <param name="copies">
+            <value>2</value>
+        </param>
+        <param name="tx">
+            <value>95.0</value>
+        </param>
+        <param name="ty">
+            <value>45.0</value>
+        </param>
+    </node>
+    <node name="edit1" prototype="corevector.edit" x="90" y="80">
+        <param name="pointDeltas">
+            <value>P 1 -0.000 -50.000 P 3 0.000 50.000</value>
+        </param>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="170" y="160">
+        <param name="width">
+            <value>760.0</value>
+        </param>
+        <param name="height">
+            <value>450.0</value>
+        </param>
+        <param name="rows">
+            <value>6</value>
+        </param>
+        <param name="columns">
+            <value>5</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="270" y="80">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>=</value>
+        </param>
+    </node>
+    <node name="polygon1" prototype="corevector.polygon" x="10" y="80">
+        <param name="radius">
+            <value>93.0</value>
+        </param>
+        <param name="sides">
+            <value>4</value>
+        </param>
+        <param name="fill">
+            <value>#00435796</value>
+        </param>
+        <param name="stroke">
+            <value>#799800ff</value>
+        </param>
+        <param name="strokeWidth">
+            <value>1.0</value>
+        </param>
+    </node>
+    <conn input="edit1" output="polygon1" port="shape"/>
+    <conn input="copy1" output="edit1" port="shape"/>
+    <conn input="place1" output="copy1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="copy2" output="place1" port="shape"/>
+</ndbx>

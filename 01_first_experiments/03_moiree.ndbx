@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="copy1" prototype="corevector.copy" rendered="true" x="250" y="90">
+        <param name="copies">
+            <value>2</value>
+        </param>
+        <param name="r">
+            <value>45.0</value>
+        </param>
+    </node>
+    <node name="ellipse1" prototype="corevector.ellipse" x="30" y="50">
+        <param name="width">
+            <value>5.0</value>
+        </param>
+        <param name="height">
+            <value>5.0</value>
+        </param>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="30" y="130">
+        <param name="rows">
+            <value>30</value>
+        </param>
+        <param name="columns">
+            <value>30</value>
+        </param>
+    </node>
+    <node name="place1" prototype="corevector.place" x="160" y="90"/>
+    <conn input="copy1" output="place1" port="shape"/>
+    <conn input="place1" output="ellipse1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+</ndbx>

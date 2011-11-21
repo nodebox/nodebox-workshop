@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasWidth" value="2100.0"/>
+    <var name="canvasHeight" value="2100.0"/>
+    <node name="copy1" prototype="corevector.copy" rendered="true" x="360" y="20">
+        <param name="copies">
+            <value>100</value>
+        </param>
+        <param name="order">
+            <value>srt</value>
+        </param>
+        <param name="tx">
+            <value>15.0</value>
+        </param>
+        <param name="ty">
+            <value>35.0</value>
+        </param>
+        <param name="r">
+            <value>61.0</value>
+        </param>
+        <param name="sx">
+            <value>-1.0</value>
+        </param>
+        <param name="sy">
+            <value>-1.0</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>myrow=random(CNUM,1,4)</value>
+        </param>
+    </node>
+    <node name="grid1" prototype="corevector.grid" x="20" y="190">
+        <param name="width">
+            <expression>rect1.width-rect2.width*1.5</expression>
+        </param>
+        <param name="height">
+            <expression>rect1.height-rect2.height*1.5</expression>
+        </param>
+        <param name="rows">
+            <expression>stamp("myrow",2)</expression>
+        </param>
+        <param name="columns">
+            <expression>stamp("mycol",2)</expression>
+        </param>
+    </node>
+    <node name="merge1" prototype="corevector.merge" x="190" y="20"/>
+    <node name="place1" prototype="corevector.place" x="110" y="110">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>mycol=random(CNUM,1,4)</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="20" y="20">
+        <param name="width">
+            <value>200.0</value>
+        </param>
+        <param name="height">
+            <value>200.0</value>
+        </param>
+        <param name="fill">
+            <expression>color(stamp("myrow",2)/5, stamp("mycol",2)/5, 0.00, 1.00)</expression>
+        </param>
+        <param name="strokeWidth">
+            <value>2.0</value>
+        </param>
+    </node>
+    <node name="rect2" prototype="corevector.rect" x="20" y="110">
+        <param name="width">
+            <expression>rect1.width/4</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+        <param name="fill">
+            <value>#fcfcfcff</value>
+        </param>
+    </node>
+    <conn input="copy1" output="merge1" port="shape"/>
+    <conn input="merge1" output="rect1" port="shapes"/>
+    <conn input="merge1" output="place1" port="shapes"/>
+    <conn input="place1" output="grid1" port="template"/>
+    <conn input="place1" output="rect2" port="shape"/>
+</ndbx>

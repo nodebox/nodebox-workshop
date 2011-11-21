@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <var name="canvasBackground" value="#000000ff"/>
+    <var name="canvasWidth" value="1280.0"/>
+    <var name="canvasHeight" value="720.0"/>
+    <node name="copy1" prototype="corevector.copy" x="200" y="60">
+        <param name="copies">
+            <value>220</value>
+        </param>
+        <param name="order">
+            <value>rts</value>
+        </param>
+        <param name="tx">
+            <value>3.0</value>
+        </param>
+        <param name="ty">
+            <value>1.0</value>
+        </param>
+        <param name="r">
+            <value>2.0</value>
+        </param>
+        <param name="sx">
+            <value>-0.5000001</value>
+        </param>
+        <param name="sy">
+            <value>-0.99999976</value>
+        </param>
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="10" y="60">
+        <param name="x">
+            <value>-640.0</value>
+        </param>
+        <param name="y">
+            <expression>wave(SINE, -200, 200, 365/speed, FRAME%(365/speed) + stamp("num", 0)*2)</expression>
+        </param>
+        <param name="width">
+            <value>20.0</value>
+        </param>
+        <param name="rx">
+            <value>10.0</value>
+        </param>
+        <param name="ry">
+            <value>10.0</value>
+        </param>
+        <param name="fill">
+            <value>#fdfdfdff</value>
+        </param>
+        <param name="speed" type="float">
+            <value>4.0</value>
+        </param>
+    </node>
+    <node name="transform1" prototype="corevector.transform" x="110" y="60">
+        <param name="ty">
+            <expression>wave(SINE, -200, 200, 365/speed_2, FRAME%(365/speed_2) + stamp("num", 0)*2)</expression>
+        </param>
+        <param bounding="hard" min="1.0" name="speed_2" type="float">
+            <value>5.0</value>
+        </param>
+    </node>
+    <node name="transform2" prototype="corevector.transform" rendered="true" x="300" y="60">
+        <param name="ty">
+            <value>204.0</value>
+        </param>
+    </node>
+    <conn input="transform1" output="rect1" port="shape"/>
+    <conn input="copy1" output="transform1" port="shape"/>
+    <conn input="transform2" output="copy1" port="shape"/>
+</ndbx>

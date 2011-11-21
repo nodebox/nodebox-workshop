@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node exported="true" name="spikes" prototype="corevector.filter" rendered="true" x="250" y="70">
+        <param name="_code">
+            <value type="python"><![CDATA[from nodebox.graphics import Path,Geometry,Point,Color
+from nodebox.util.Geometry import coordinates,distance,angle
+from random import uniform,choice
+
+def cook(self):
+    if self.shape is None: return None
+    p1c = self.shape.clone()
+    g = Geometry()
+    m = self.height
+    #c = 0.8
+    curvature = self.curvature
+  
+    for i, point in enumerate(p1c.points):
+        #checkpoint = choice(p1c.points)
+        p2 = p1c.points[i-1]
+        p1 = Path()
+        p1.strokeColor = self.stroke
+        p1.fillColor = None
+        #d =distance(point.x,point.y,checkpoint.x,checkpoint.y)
+        
+        d = distance(point.x, point.y, p2.x, p2.y)
+        a = angle(point.x, point.y, p2.x, p2.y)
+        #
+        midx = point.x + (p2.x-point.x) * 0.5
+        midy = point.y + (p2.y-point.y) * 0.5
+ 
+        dx, dy = coordinates(midx, midy, m, a-self.angle)
+        if d<self.distAB:
+            p1.moveto(point.x,point.y)
+            vx = point.x + (midx-point.x) * curvature
+            vy = point.y + (midy-point.y) * curvature
+            p1.curveto(vx, vy, dx, dy, dx, dy)    
+ 
+            vx = p2.x + (midx-p2.x) * curvature
+            vy = p2.y + (midy-p2.y) * curvature
+            p1.curveto(dx, dy, vx, vy, p2.x, p2.y)
+ 
+            p1.close()
+            g.add(p1)
+    return g
+
+]]></value>
+        </param>
+        <param name="_image">
+            <value>spike.png</value>
+        </param>
+        <param name="stroke" type="color">
+            <value>#000035ff</value>
+        </param>
+        <param name="strokewidth" type="float">
+            <value>11.0</value>
+        </param>
+        <param name="height" type="float">
+            <value>13.0</value>
+        </param>
+        <param min="10.0" name="distAB" type="float">
+            <value>13.0</value>
+        </param>
+        <param name="angle" type="float">
+            <value>-90.0</value>
+        </param>
+        <param name="curvature" type="float">
+            <value>0.50000185</value>
+        </param>
+    </node>
+</ndbx>

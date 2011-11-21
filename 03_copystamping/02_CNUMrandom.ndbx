@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="ellipse1" prototype="corevector.ellipse" x="140" y="20">
+<param name="width">
+<expression>stamp("size",20)</expression>
+</param>
+<param name="height">
+<expression>width</expression>
+</param>
+<param name="fill">
+<expression>color(1.0,stamp("size",20)/20.0, stamp("size",20)/30.0,.5)</expression>
+</param>
+<param name="strokeWidth">
+<value>1.0</value>
+</param>
+</node>
+<node name="place1" prototype="corevector.place" rendered="true" x="230" y="20">
+<param name="stamp">
+<value>1</value>
+</param>
+<param name="expr">
+<value>size=random(CNUM,5,20)</value>
+</param>
+</node>
+<node name="polygon1" prototype="corevector.polygon" x="40" y="100">
+<param name="radius">
+<value>220.0</value>
+</param>
+<param name="sides">
+<value>5</value>
+</param>
+<param name="align">
+<value>1</value>
+</param>
+</node>
+<node name="scatter1" prototype="corevector.scatter" x="140" y="100">
+<param name="amount">
+<value>2000</value>
+</param>
+</node>
+<conn input="scatter1" output="polygon1" port="shape"/>
+<conn input="place1" output="scatter1" port="template"/>
+<conn input="place1" output="ellipse1" port="shape"/>
+</ndbx>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ndbx formatVersion="0.9" type="file">
+<node name="align1" prototype="corevector.align" x="150" y="90"/>
+<node name="copy1" prototype="corevector.copy" rendered="true" x="230" y="90">
+<param name="copies">
+<value>21</value>
+</param>
+<param name="r">
+<value>15.0</value>
+</param>
+<param name="sx">
+<value>10.0</value>
+</param>
+<param name="sy">
+<value>10.0</value>
+</param>
+</node>
+<node name="polygon1" prototype="corevector.polygon" x="50" y="90">
+<param name="radius">
+<value>53.0</value>
+</param>
+<param name="fill">
+<value>#7e900065</value>
+</param>
+<param name="strokeWidth">
+<value>1.0</value>
+</param>
+</node>
+<conn input="copy1" output="align1" port="shape"/>
+<conn input="align1" output="polygon1" port="shape"/>
+</ndbx>

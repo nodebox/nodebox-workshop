@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="0.9" type="file">
+    <node name="grid1" prototype="corevector.grid" x="120" y="120"/>
+    <node name="merge1" prototype="corevector.merge" x="120" y="30"/>
+    <node name="place1" prototype="corevector.place" rendered="true" x="220" y="30">
+        <param name="stamp">
+            <value>1</value>
+        </param>
+        <param name="expr">
+            <value>num=CNUM</value>
+        </param>
+    </node>
+    <node name="rect1" prototype="corevector.rect" x="20" y="30">
+        <param name="width">
+            <expression>grid1.width/grid1.rows</expression>
+        </param>
+        <param name="height">
+            <expression>width</expression>
+        </param>
+        <param name="stroke">
+            <value>#f7b300ff</value>
+        </param>
+    </node>
+    <node name="textpath1" prototype="corevector.textpath" x="20" y="120">
+        <param name="text">
+            <expression>stamp("num",2)</expression>
+        </param>
+        <param name="font">
+            <value>Verdana-Bold</value>
+        </param>
+        <param name="size">
+            <expression>rect1.width/2</expression>
+        </param>
+        <param name="y">
+            <expression>size/2</expression>
+        </param>
+        <param name="fill">
+            <value>#fefefeff</value>
+        </param>
+    </node>
+    <conn input="merge1" output="rect1" port="shapes"/>
+    <conn input="merge1" output="textpath1" port="shapes"/>
+    <conn input="place1" output="merge1" port="shape"/>
+    <conn input="place1" output="grid1" port="template"/>
+</ndbx>
