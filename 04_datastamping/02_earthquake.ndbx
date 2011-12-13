@@ -48,14 +48,6 @@
             <expression>color(1.00, 0.49, 1-height/10.0, 1.00)</expression>
         </param>
     </node>
-    <node name="line1" prototype="corevector.line" x="220" y="120">
-        <param name="distance">
-            <expression>stamp("data_value_7",2)/5</expression>
-        </param>
-        <param name="strokeWidth">
-            <value>2.0</value>
-        </param>
-    </node>
     <node name="merge1" prototype="corevector.merge" x="200" y="10"/>
     <node name="rect1" prototype="corevector.rect" x="10" y="90">
         <param name="width">

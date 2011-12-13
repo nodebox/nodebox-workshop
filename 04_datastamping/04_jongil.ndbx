@@ -11,12 +11,12 @@
             <value>csv/kimjongil.csv</value>
         </param>
     </node>
-    <node name="delete1" prototype="corevector.delete" x="600" y="280">
+    <node name="delete1" prototype="corevector.delete" x="520" y="280">
         <param name="operation">
             <value>0</value>
         </param>
     </node>
-    <node name="ellipse1" prototype="corevector.ellipse" x="260" y="290">
+    <node name="ellipse1" prototype="corevector.ellipse" x="260" y="280">
         <param name="width">
             <value>300.0</value>
         </param>
@@ -35,12 +35,12 @@
             <value>10.0</value>
         </param>
     </node>
-    <node name="fit1" prototype="corevector.fit" x="490" y="370">
+    <node name="fit1" prototype="corevector.fit" x="430" y="350">
         <param name="width">
             <value>360.0</value>
         </param>
     </node>
-    <node name="joy_division" prototype="corevector.generator" x="390" y="370">
+    <node name="joy_division" prototype="corevector.generator" x="340" y="350">
         <param name="_code">
             <value type="python"><![CDATA[import os
 from os.path import abspath
@@ -89,10 +89,10 @@ def cook(self):
             <value>0.2</value>
         </param>
     </node>
-    <node name="merge1" prototype="corevector.merge" x="70" y="50"/>
-    <node name="merge2" prototype="corevector.merge" rendered="true" x="670" y="150"/>
+    <node name="merge1" prototype="corevector.merge" x="60" y="50"/>
+    <node name="merge2" prototype="corevector.merge" x="650" y="150"/>
     <node name="merge3" prototype="corevector.merge" x="250" y="50"/>
-    <node name="resample1" prototype="corevector.resample" x="360" y="180">
+    <node name="resample1" prototype="corevector.resample" x="380" y="190">
         <param name="method">
             <value>amount</value>
         </param>
@@ -105,7 +105,7 @@ def cook(self):
     </node>
     <node name="textpath1" prototype="corevector.textpath" x="-60" y="50">
         <param name="text">
-            <expression>stamp("data_value_0","none")</expression>
+            <expression>stamp("data_value_0", "hello")</expression>
         </param>
         <param name="size">
             <value>20.0</value>
@@ -119,7 +119,7 @@ def cook(self):
     </node>
     <node name="textpath2" prototype="corevector.textpath" x="-60" y="140">
         <param name="text">
-            <expression>stamp("data_value_1","none")</expression>
+            <expression>stamp("data_value_1", "hello")</expression>
         </param>
         <param name="size">
             <value>20.0</value>
@@ -128,7 +128,7 @@ def cook(self):
             <value>LEFT</value>
         </param>
     </node>
-    <node name="transform1" prototype="corevector.transform" x="420" y="50">
+    <node name="transform1" prototype="corevector.transform" rendered="true" x="420" y="50">
         <param name="r">
             <expression>stamp("data_row_position", 0) * 360</expression>
         </param>
