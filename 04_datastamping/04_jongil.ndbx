@@ -26,7 +26,7 @@
     </node>
     <node name="ellipse3" prototype="corevector.ellipse" x="160" y="140">
         <param name="y">
-            <value>-13.0</value>
+            <value>-12.0</value>
         </param>
         <param name="width">
             <value>6.0</value>
@@ -90,7 +90,7 @@ def cook(self):
         </param>
     </node>
     <node name="merge1" prototype="corevector.merge" x="60" y="50"/>
-    <node name="merge2" prototype="corevector.merge" x="650" y="150"/>
+    <node name="merge2" prototype="corevector.merge" rendered="true" x="650" y="150"/>
     <node name="merge3" prototype="corevector.merge" x="250" y="50"/>
     <node name="resample1" prototype="corevector.resample" x="380" y="190">
         <param name="method">
@@ -113,13 +113,16 @@ def cook(self):
         <param name="align">
             <value>RIGHT</value>
         </param>
+        <param name="x">
+            <value>-3.0</value>
+        </param>
         <param name="fill">
             <value>#005500ff</value>
         </param>
     </node>
     <node name="textpath2" prototype="corevector.textpath" x="-60" y="140">
         <param name="text">
-            <expression>stamp("data_value_1", "hello")</expression>
+            <expression>stamp("data_value_1", "hello").trim()</expression>
         </param>
         <param name="size">
             <value>20.0</value>
@@ -127,8 +130,11 @@ def cook(self):
         <param name="align">
             <value>LEFT</value>
         </param>
+        <param name="x">
+            <value>3.0</value>
+        </param>
     </node>
-    <node name="transform1" prototype="corevector.transform" rendered="true" x="420" y="50">
+    <node name="transform1" prototype="corevector.transform" x="420" y="50">
         <param name="r">
             <expression>stamp("data_row_position", 0) * 360</expression>
         </param>
