@@ -15,9 +15,6 @@
         <param name="stamp">
             <value>1</value>
         </param>
-        <param name="expr">
-            <value>=</value>
-        </param>
     </node>
     <node name="datastamp2" prototype="corevector.datastamp" rendered="true" x="430" y="130">
         <param name="file">
@@ -30,6 +27,9 @@
         </param>
         <param name="distance">
             <value>500.0</value>
+        </param>
+        <param name="points">
+            <value>50</value>
         </param>
     </node>
     <node name="merge2" prototype="corevector.merge" x="320" y="60"/>
@@ -47,20 +47,9 @@
             <expression>stamp("CNUM", 0) + 1</expression>
         </param>
     </node>
-    <node name="resample1" prototype="corevector.resample" x="320" y="200">
-        <param name="method">
-            <value>amount</value>
-        </param>
-        <param name="length">
-            <value>7.0</value>
-        </param>
-        <param name="points">
-            <value>50</value>
-        </param>
-    </node>
     <node name="textpath1" prototype="corevector.textpath" x="220" y="110">
         <param name="text">
-            <expression>stamp("data_value_0","none")</expression>
+            <expression>stamp("data_value_0", "hello")</expression>
         </param>
         <param name="size">
             <value>6.0</value>
@@ -68,15 +57,11 @@
         <param name="align">
             <value>RIGHT</value>
         </param>
-        <param name="seed" type="int" widget="seed">
-            <value>0</value>
-        </param>
     </node>
-    <conn input="resample1" output="line1" port="shape"/>
-    <conn input="datastamp2" output="resample1" port="template"/>
     <conn input="merge2" output="copy1" port="shapes"/>
     <conn input="merge2" output="textpath1" port="shapes"/>
     <conn input="datastamp2" output="merge2" port="shape"/>
     <conn input="align1" output="rect1" port="shape"/>
     <conn input="copy1" output="align1" port="shape"/>
+    <conn input="datastamp2" output="line1" port="template"/>
 </ndbx>
