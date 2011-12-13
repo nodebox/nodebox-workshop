@@ -2,7 +2,7 @@
 <ndbx formatVersion="0.9" type="file">
     <node name="align1" prototype="corevector.align" x="100" y="10">
         <param name="x">
-            <expression>line1.distance+5</expression>
+            <expression>rect1.width + 2</expression>
         </param>
         <param name="valign">
             <value>middle</value>
@@ -19,87 +19,12 @@
             <value>middle</value>
         </param>
     </node>
-    <node name="datastamp1" prototype="corevector.datastamp" rendered="true" x="420" y="70">
-        <param name="_code">
-            <value type="python"><![CDATA[# Data stamp generates new geometry for each row in a CSV file.
-# The first row is skipped by default since we assume it is the header row.
-# It copies the incoming shape geometry and provides a number of stamp keys that you can refer to.
-# If you provide a template shape it will be used as a point source and for each row, the source shape will
-# be translated to the point.
-# The table name is appended as a prefix, so with a prefix of "data", you get the following keys:
-# - data_row_count: the amount of rows in the file
-# - data_column_count: the amount of columns in the file
-# - data_row_index: the current index of the row, starting from zero.
-# - data_row_position: the relative position in the file, from 0.0-1.0
-# - data_value_0: the value of the first column. If the value can be parsed as a number, it will.
-# - data_value_1: the value for the second column.
-# - ....
-# - data_value_n: the value for the last column (which is data_column_count - 1)
-# - data_relative_value_0 -> data_relative_value_n: a value between 0.0 and 1.0,
-#      the total of the column divided by the current value. This is only available if the column
-#      has numbers in it.
-# - column_total_0 -> column_total_n: the total value for this column. This is only available if 
-#      the column has numbers in it.
-
-import csv
-
-from nodebox.graphics import Geometry, Transform, Point
-from nodebox.node import StampExpression
-
-def cook(self):
-    if self.shape is None: return None
-    geo = Geometry()
-    prefix = self.tableName + "_"
-    # We read in all the rows as a list.
-    # We can't use "for row in reader" since we want to know the total length. 
-    rows = list(csv.reader(open(self.file, "rb")))
-    header_row = rows[0]
-    column_count = len(header_row)
-    rows = rows[1:]
-    row_count = len(rows)
-    
-    # Go through all the rows once to calculate the total.
-    sums = {}
-    for row in rows:
-        for i, value in enumerate(row):
-            try:
-                value = float(value)
-                sums[i] = sums.get(i, 0) + float(value)
-            except ValueError:
-                pass
-    for key, value in sums.items():
-        context.put(prefix + 'column_total_' + str(key), value)
-
-    # Now copy the geometry.
-    context.put(prefix + 'row_count', row_count)
-    context.put(prefix + 'column_count', column_count)
-    
-    if self.template is None:
-        points = [Point()] * len(rows)
-    else:
-        points = self.template.points[:len(rows)]
-    
-    
-    for row_index, pt in enumerate(points):
-        row = rows[row_index]
-        context.put(prefix + 'row_index', row_index)
-        context.put(prefix + 'row_position', row_index/float(row_count))
-        for col_index, value in enumerate(row):
-            # Try to convert the value to a number. Otherwise, just output it.
-            try:
-                value = float(value)
-                if sums.has_key(col_index):
-                    relative = value / float(sums[col_index])
-                    context.put(prefix + 'relative_value_' + str(col_index), relative)
-            except ValueError:
-                pass
-            context.put(prefix + 'value_' + str(col_index), value)
-        self.node.stampExpressions(context)
-        t = Transform()
-        t.translate(pt.x, pt.y)
-        geo.extend(t.map(self.shape))
-    return geo]]></value>
+    <node name="align3" prototype="corevector.align" x="100" y="90">
+        <param name="valign">
+            <value>middle</value>
         </param>
+    </node>
+    <node name="datastamp1" prototype="corevector.datastamp" rendered="true" x="420" y="70">
         <param name="file">
             <value>csv/earthquake.csv</value>
         </param>
@@ -113,20 +38,6 @@ def cook(self):
         </param>
     </node>
     <node name="ellipse2" prototype="corevector.ellipse" x="10" y="180">
-        <param name="_code">
-            <value type="python"><![CDATA[from nodebox.graphics import Path
-
-def cook(self):
-    p = Path()
-    p.ellipse(self.x, self.y, self.width, self.height)
-    p.fillColor = self.fill
-    if self.strokeWidth > 0:
-        p.strokeColor = self.stroke
-        p.strokeWidth = self.strokeWidth
-    else:
-        p.strokeColor = None
-    return p.asGeometry()]]></value>
-        </param>
         <param name="width">
             <expression>stamp("data_value_6",2)*2</expression>
         </param>
@@ -137,24 +48,7 @@ def cook(self):
             <expression>color(1.00, 0.49, 1-height/10.0, 1.00)</expression>
         </param>
     </node>
-    <node name="line1" prototype="corevector.line" x="100" y="90">
-        <param name="_code">
-            <value type="python"><![CDATA[from nodebox.graphics import Path
-from nodebox.util.Geometry import coordinates
-
-def cook(self):
-    p = Path()
-    x1, y1 = coordinates(self.x, self.y, self.distance, self.angle)
-    p.line(self.x, self.y, x1, y1)
-    if self.strokeWidth > 0:
-        p.strokeColor = self.stroke
-        p.strokeWidth = self.strokeWidth
-    else:
-        p.strokeColor = None
-    # Resample the path so it contains the desired amount of points.
-    p = p.resampleByAmount(self.points, True)
-    return p.asGeometry()]]></value>
-        </param>
+    <node name="line1" prototype="corevector.line" x="220" y="120">
         <param name="distance">
             <expression>stamp("data_value_7",2)/5</expression>
         </param>
@@ -162,19 +56,16 @@ def cook(self):
             <value>2.0</value>
         </param>
     </node>
-    <node name="merge1" prototype="corevector.merge" x="190" y="10"/>
-    <node name="resample1" prototype="corevector.resample" x="320" y="220">
-        <param name="_code">
-            <value type="python"><![CDATA[
-def cook(self):
-    # Check if a shape is connected.
-    if self.shape is None: return None
-    if self.method == 'length':
-        return self.shape.resampleByLength(self.length)
-    else:
-        print self.points
-        return self.shape.resampleByAmount(self.points, self.perContour)]]></value>
+    <node name="merge1" prototype="corevector.merge" x="200" y="10"/>
+    <node name="rect1" prototype="corevector.rect" x="10" y="90">
+        <param name="width">
+            <expression>stamp("data_value_7", 2)/5</expression>
         </param>
+        <param name="height">
+            <value>2.0</value>
+        </param>
+    </node>
+    <node name="resample1" prototype="corevector.resample" x="320" y="220">
         <param name="method">
             <value>amount</value>
         </param>
@@ -187,7 +78,7 @@ def cook(self):
             <expression>stamp("data_value_9","none")</expression>
         </param>
         <param name="size">
-            <value>4.0</value>
+            <value>3.0</value>
         </param>
     </node>
     <node name="transform1" prototype="corevector.transform" x="290" y="60">
@@ -198,10 +89,11 @@ def cook(self):
     <conn input="transform1" output="merge1" port="shape"/>
     <conn input="align2" output="ellipse2" port="shape"/>
     <conn input="resample1" output="ellipse1" port="shape"/>
-    <conn input="merge1" output="line1" port="shapes"/>
     <conn input="merge1" output="align1" port="shapes"/>
     <conn input="merge1" output="align2" port="shapes"/>
     <conn input="align1" output="textpath1" port="shape"/>
     <conn input="datastamp1" output="transform1" port="shape"/>
     <conn input="datastamp1" output="resample1" port="template"/>
+    <conn input="align3" output="rect1" port="shape"/>
+    <conn input="merge1" output="align3" port="shapes"/>
 </ndbx>

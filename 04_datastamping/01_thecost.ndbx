@@ -10,50 +10,32 @@
             <value>csv/Debtris.csv</value>
         </param>
     </node>
-    <node name="line1" prototype="corevector.line" x="260" y="160">
+    <node name="line1" prototype="corevector.line" x="320" y="110">
         <param name="angle">
             <value>90.0</value>
         </param>
         <param name="distance">
             <value>240.0</value>
         </param>
+        <param name="points">
+            <value>23</value>
+        </param>
     </node>
     <node name="merge1" prototype="corevector.merge" x="260" y="10"/>
     <node name="rect1" prototype="corevector.rect" x="50" y="90">
-        <param name="_code">
-            <value type="python"><![CDATA[from nodebox.graphics import Path
-
-def cook(self):
-    p = Path()
-    if self.rx == 0 and self.ry == 0:
-        p.rect(self.x, self.y, self.width, self.height)
-    else:
-        p.roundedRect(self.x, self.y, self.width, self.height, self.rx, self.ry)
-    p.fillColor = self.fill
-    if self.strokeWidth > 0:
-        p.strokeColor = self.stroke
-        p.strokeWidth = self.strokeWidth
-    else:
-        p.strokeColor = None
-    return p.asGeometry()]]></value>
-        </param>
         <param name="width">
-            <expression>stamp("data_value_1",2.0)/10.0</expression>
+            <expression>stamp("data_value_1", 2.0)/10.0</expression>
         </param>
         <param name="height">
             <value>8.0</value>
         </param>
         <param name="fill">
-            <value>#00000021</value>
-        </param>
-        <param name="strokeWidth">
-            <value>1.0</value>
+            <value>#b10000ff</value>
         </param>
     </node>
-    <node name="resample1" prototype="corevector.resample" x="360" y="160"/>
     <node name="textpath1" prototype="corevector.textpath" x="50" y="10">
         <param name="text">
-            <expression>stamp("data_value_3","nn")</expression>
+            <expression>stamp("data_value_3","hello")</expression>
         </param>
         <param name="size">
             <value>7.0</value>
@@ -72,9 +54,8 @@ def cook(self):
         </param>
     </node>
     <conn input="align1" output="rect1" port="shape"/>
-    <conn input="resample1" output="line1" port="shape"/>
-    <conn input="datastamp2" output="resample1" port="template"/>
     <conn input="merge1" output="align1" port="shapes"/>
     <conn input="merge1" output="textpath1" port="shapes"/>
     <conn input="datastamp2" output="merge1" port="shape"/>
+    <conn input="datastamp2" output="line1" port="template"/>
 </ndbx>
