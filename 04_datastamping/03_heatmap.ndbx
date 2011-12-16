@@ -41,7 +41,7 @@
             <value>5.0</value>
         </param>
         <param name="fill">
-            <expression>color(0.5, stamp("data_relative_value_"+column,20)*40, 0)</expression>
+            <expression>hsb(0.2, 1, stamp("data_normalized_value_"+column, 1))</expression>
         </param>
         <param name="column" type="int">
             <expression>stamp("CNUM", 0) + 1</expression>
