@@ -24,18 +24,18 @@ def cook(self):
         p.fill = None
         p.stroke = self.stroke
         p.strokeWidth = self.stroke_width
-        p.moveto(0, h)
         for x in xrange(0, w, detail):
             r, g, b, a = raster.getPixel(x, y, dummy_array)
             brightness = max(r, g, b)
-            p.lineto(x, y + brightness * self.line_height / 100)
+            if not self.alpha_mask or a >= 10:
+                p.addPoint(x, y+ brightness * self.line_height / 100)
         geo.add(p)
 
     return geo
     ]]></value>
         </param>
         <param name="image" type="string" widget="image">
-            <value>Kim-Jong-il.jpg</value>
+            <value>Kim-Jong-il.png</value>
         </param>
         <param name="detail" type="int">
             <value>3</value>
@@ -48,6 +48,9 @@ def cook(self):
         </param>
         <param name="stroke_width" type="float">
             <value>1.0</value>
+        </param>
+        <param name="alpha_mask" type="int" widget="toggle">
+            <value>1</value>
         </param>
     </node>
 </ndbx>
