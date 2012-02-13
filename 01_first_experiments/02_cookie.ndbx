@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ndbx formatVersion="0.9" type="file">
-    <node name="compound1" prototype="corevector.compound" rendered="true" x="370" y="130">
-        <param name="function">
-            <value>subtracted</value>
-        </param>
-        <param name="fill">
-            <value>#00000004</value>
-        </param>
-        <param name="strokeWidth">
-            <value>2.0</value>
-        </param>
+<ndbx formatVersion="1.0" type="file">
+    <link href="java:nodebox.function.MathFunctions" rel="functions"/>
+    <link href="java:nodebox.function.StringFunctions" rel="functions"/>
+    <link href="java:nodebox.function.ColorFunctions" rel="functions"/>
+    <link href="java:nodebox.function.ListFunctions" rel="functions"/>
+    <link href="java:nodebox.function.DataFunctions" rel="functions"/>
+    <link href="python:libraries/corevector/corevector.py" rel="functions"/>
+    <node name="root" renderedChild="colorize1">
+        <node name="colorize1" position="560.00,80.00" prototype="corevector.colorize">
+            <port name="fill" type="color" value="#0000001e"/>
+            <port name="strokeWidth" type="float" value="2.0"/>
+        </node>
+        <node name="compound1" position="460.00,80.00" prototype="corevector.compound">
+            <port name="function" type="string" value="subtracted"/>
+        </node>
+        <node name="ellipse1" position="240.00,20.00" prototype="corevector.ellipse"/>
+        <node name="group1" position="340.00,20.00" prototype="corevector.group"/>
+        <node name="scatter1" position="140.00,20.00" prototype="corevector.scatter"/>
+        <node name="star1" position="20.00,80.00" prototype="corevector.star">
+            <port name="points" type="int" value="5"/>
+        </node>
+        <conn input="scatter1.shape" output="star1"/>
+        <conn input="ellipse1.position" output="scatter1"/>
+        <conn input="group1.shapes" output="ellipse1"/>
+        <conn input="compound1.shape1" output="group1"/>
+        <conn input="compound1.shape2" output="star1"/>
+        <conn input="colorize1.shape" output="compound1"/>
     </node>
-    <node name="ellipse1" prototype="corevector.ellipse" x="140" y="0"/>
-    <node name="place1" prototype="corevector.place" x="240" y="30"/>
-    <node name="scatter1" prototype="corevector.scatter" x="140" y="80"/>
-    <node name="star1" prototype="corevector.star" x="40" y="140">
-        <param name="points">
-            <value>5</value>
-        </param>
-    </node>
-    <conn input="compound1" output="place1" port="shape"/>
-    <conn input="compound1" output="star1" port="shapeB"/>
-    <conn input="scatter1" output="star1" port="shape"/>
-    <conn input="place1" output="scatter1" port="template"/>
-    <conn input="place1" output="ellipse1" port="shape"/>
 </ndbx>

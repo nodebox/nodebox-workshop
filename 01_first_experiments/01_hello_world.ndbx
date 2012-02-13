@@ -1,47 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ndbx formatVersion="0.9" type="file">
-<node name="merge1" prototype="corevector.merge" rendered="true" x="310" y="70"/>
-<node name="resample1" prototype="corevector.resample" x="120" y="70"/>
-<node name="resample2" prototype="corevector.resample" x="120" y="170"/>
-<node name="snap1" prototype="corevector.snap" x="200" y="70">
-<param name="distance">
-<value>9.0</value>
-</param>
-</node>
-<node name="snap2" prototype="corevector.snap" x="200" y="170">
-<param name="distance">
-<value>13.0</value>
-</param>
-</node>
-<node name="textpath1" prototype="corevector.textpath" x="40" y="70">
-<param name="text">
-<value>HELLO</value>
-</param>
-<param name="font">
-<value>Arial-Black</value>
-</param>
-<param name="size">
-<value>49.0</value>
-</param>
-</node>
-<node name="textpath2" prototype="corevector.textpath" x="40" y="170">
-<param name="text">
-<value>WORLD</value>
-</param>
-<param name="font">
-<value>Arial-Black</value>
-</param>
-<param name="size">
-<value>49.0</value>
-</param>
-<param name="y">
-<value>50.0</value>
-</param>
-</node>
-<conn input="snap2" output="resample2" port="shape"/>
-<conn input="resample1" output="textpath1" port="shape"/>
-<conn input="resample2" output="textpath2" port="shape"/>
-<conn input="merge1" output="snap1" port="shapes"/>
-<conn input="merge1" output="snap2" port="shapes"/>
-<conn input="snap1" output="resample1" port="shape"/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ndbx formatVersion="1.0" type="file">
+    <link href="java:nodebox.function.MathFunctions" rel="functions"/>
+    <link href="java:nodebox.function.StringFunctions" rel="functions"/>
+    <link href="java:nodebox.function.ColorFunctions" rel="functions"/>
+    <link href="java:nodebox.function.ListFunctions" rel="functions"/>
+    <link href="java:nodebox.function.DataFunctions" rel="functions"/>
+    <link href="python:libraries/corevector/corevector.py" rel="functions"/>
+    <node name="root" renderedChild="combine1">
+        <node name="combine1" position="340.00,80.00" prototype="list.combine"/>
+        <node name="resample1" position="140.00,20.00" prototype="corevector.resample"/>
+        <node name="resample2" position="140.00,120.00" prototype="corevector.resample"/>
+        <node name="snap1" position="240.00,20.00" prototype="corevector.snap">
+            <port name="position" type="point" value="-2.00,0.00"/>
+        </node>
+        <node name="snap2" position="240.00,120.00" prototype="corevector.snap">
+            <port name="position" type="point" value="11.00,0.00"/>
+        </node>
+        <node name="textpath1" position="40.00,20.00" prototype="corevector.textpath">
+            <port name="text" type="string" value="HELLO"/>
+            <port name="font_name" type="string" value="Arial-Black"/>
+            <port name="font_size" type="float" value="50.0"/>
+        </node>
+        <node name="textpath2" position="40.00,120.00" prototype="corevector.textpath">
+            <port name="text" type="string" value="WORLD"/>
+            <port name="font_name" type="string" value="Arial-Black"/>
+            <port name="font_size" type="float" value="50.0"/>
+            <port name="position" type="point" value="0.00,50.00"/>
+        </node>
+        <conn input="resample1.shape" output="textpath1"/>
+        <conn input="snap1.shape" output="resample1"/>
+        <conn input="resample2.shape" output="textpath2"/>
+        <conn input="snap2.shape" output="resample2"/>
+        <conn input="combine1.list1" output="snap1"/>
+        <conn input="combine1.list2" output="snap2"/>
+    </node>
 </ndbx>
